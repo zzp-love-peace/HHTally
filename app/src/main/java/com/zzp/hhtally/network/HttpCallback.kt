@@ -2,12 +2,14 @@ package com.zzp.hhtally.network
 
 import com.zzp.hhtally.util.logE
 import com.zzp.hhtally.util.showToast
+import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.observers.DisposableObserver
 
 import retrofit2.HttpException
 
+
 abstract class HttpCallback<T : Any>: DisposableObserver<T>() {
-    
+
     abstract fun onSuccess(model: T)
     
     private fun onFailure(msg: String) {

@@ -2,15 +2,15 @@ package com.zzp.hhtally.base
 
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<V : BaseView> : IPresenter<V>{
+abstract class BasePresenter<V : BaseView> {
 
     private var viewRef: WeakReference<V>? = null
 
-    override fun attachView(view: V) {
+    fun attachView(view: V) {
         viewRef = WeakReference<V>(view)
     }
 
-    override fun detachView() {
+    fun detachView() {
         if (viewRef != null) {
             viewRef?.clear()
             viewRef = null

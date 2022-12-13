@@ -10,10 +10,4 @@ object NetWork {
 
     private val httpService = RetrofitManager.create<NetworkService>()
 
-    private fun <T : Any> Observable<T>.convert2Main() =
-        this.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-
-    fun <T : Any> Observable<T>.execute(lifecycle: LifecycleTransformer<T>, callback: HttpCallback<T>) =
-        this.convert2Main().compose(lifecycle).subscribe(callback)
 }

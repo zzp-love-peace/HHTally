@@ -1,7 +1,7 @@
 package com.zzp.hhtally.ui.login
 
 import com.zzp.hhtally.base.BasePresenter
-import com.zzp.hhtally.base.BaseView
+
 
 class LoginPresenter(baseView: ILoginView) : BasePresenter<ILoginView>() {
 
