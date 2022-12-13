@@ -1,4 +1,4 @@
-package com.zzp.hhtally.application
+package com.zzp.hhtally.base
 
 import android.annotation.SuppressLint
 import android.app.Application

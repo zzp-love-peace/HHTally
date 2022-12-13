@@ -2,10 +2,11 @@ package com.zzp.hhtally.network
 
 import com.zzp.hhtally.util.logE
 import com.zzp.hhtally.util.showToast
-import io.reactivex.observers.DisposableObserver
+import io.reactivex.rxjava3.observers.DisposableObserver
+
 import retrofit2.HttpException
 
-abstract class HttpCallback<T>: DisposableObserver<T>() {
+abstract class HttpCallback<T : Any>: DisposableObserver<T>() {
     
     abstract fun onSuccess(model: T)
     
@@ -17,8 +18,8 @@ abstract class HttpCallback<T>: DisposableObserver<T>() {
 
     }
 
-    override fun onError(e: Throwable?) {
-        e?.logE()
+    override fun onError(e: Throwable) {
+        e.logE()
         if (e is HttpException) {
             val code = e.code()
             var msg = e.message()
@@ -30,7 +31,7 @@ abstract class HttpCallback<T>: DisposableObserver<T>() {
             }
             onFailure(msg)
         } else {
-            onFailure(e?.message ?: "错误信息为空")
+            onFailure(e.message ?: "错误信息为空")
         }
         onFinish()
     }
