@@ -9,8 +9,8 @@ class LoginPresenter(baseView: ILoginView) : BasePresenter<ILoginView>() {
         attachView(baseView)
     }
 
-    fun login(username: String, password: String) {
-
+    fun login(username: String, password: String) : Boolean {
+        return false
     }
 
     //判断用户名与密码是否合法

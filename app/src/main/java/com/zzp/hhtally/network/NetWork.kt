@@ -11,3 +11,4 @@ object NetWork {
     private val httpService = RetrofitManager.create<NetworkService>()
 
 }
+
