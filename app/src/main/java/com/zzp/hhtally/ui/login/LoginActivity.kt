@@ -1,5 +1,6 @@
 package com.zzp.hhtally.ui.login
 
+import com.zzp.hhtally.MainActivity
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseActivity
 import com.zzp.hhtally.data.User
@@ -44,6 +45,7 @@ class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
                 )
                 if (result) {
                     showLoginSuccess("yes")
+                    startActivity(MainActivity::class.java, true)
                 } else {
                     showLoginFailed("no")
                 }
@@ -57,8 +59,8 @@ class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
 
     override fun showLoginFailed(errorMsg: String) {
         binding.apply {
-            editName.error = getString(R.string.hint_login_error)
-            editPassword.error = getString(R.string.hint_login_error)
+            tilName.error = getString(R.string.hint_login_error)
+            tilPassword.error = getString(R.string.hint_login_error)
         }
     }
 
