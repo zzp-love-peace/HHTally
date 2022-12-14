@@ -23,7 +23,7 @@ fun String.showToast() {
     Toast.makeText(MyApplication.context, this, Toast.LENGTH_SHORT).show()
 }
 
-fun <T : Any> Observable<T>.convert2Main() =
+fun <T : Any> Observable<T>.convert2Main(): Observable<T> =
     this.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 
