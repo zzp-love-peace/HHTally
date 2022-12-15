@@ -8,10 +8,10 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 
-fun uri2RequestBody(uri: Uri) =
+fun uri2RequestBody(uri: Uri): RequestBody =
     RequestBody.create(MediaType.parse("image/jpeg"), uri.toFile())
 
-fun byteArray2RequestBody(bytes: ByteArray) =
+fun byteArray2RequestBody(bytes: ByteArray): RequestBody =
     RequestBody.create(MediaType.parse("image/jpeg"), bytes)
 
 fun bitmap2ByteArray(bitmap: Bitmap): ByteArray {
@@ -21,7 +21,7 @@ fun bitmap2ByteArray(bitmap: Bitmap): ByteArray {
     return byteArrayOutPutStream.toByteArray()
 }
 
-fun bitmap2Base64(image: Bitmap): String{
+fun bitmap2Base64(image: Bitmap): String {
     val byteArrayOutputStream = ByteArrayOutputStream()
     image.compress(Bitmap.CompressFormat.JPEG, 100,
         byteArrayOutputStream)
@@ -31,5 +31,5 @@ fun bitmap2Base64(image: Bitmap): String{
     return Base64.encodeToString(imageByteArray, Base64.DEFAULT)
 }
 
-fun base642ByteArray(base64: String) = Base64.decode(base64, Base64.DEFAULT)
+fun base642ByteArray(base64: String): ByteArray = Base64.decode(base64, Base64.DEFAULT)
 
