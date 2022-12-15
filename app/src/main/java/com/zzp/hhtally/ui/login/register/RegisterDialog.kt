@@ -26,7 +26,7 @@ class RegisterDialog(activity: LoginActivity) {
                 val password = editPassword.text?.trim().toString()
                 val confirmPassword = editConfirmPassword.text?.trim().toString()
                 if (checkRegisterStatus(name, password, confirmPassword)) {
-                    dialogRegisterAccountBinding.loading.isVisible = true
+                    dialogRegisterAccountBinding.loadingProgress.isVisible = true
                     "注册成功-假的".showToast()
                     registerDialog.dismiss()
                 }

@@ -16,7 +16,7 @@ fun Throwable.logE() {
 }
 
 fun String.logD(title: String = "logD") {
-    Log.d(TAG, title + this)
+    Log.d(TAG, "$title===>: $this")
 }
 
 fun String.showToast() {

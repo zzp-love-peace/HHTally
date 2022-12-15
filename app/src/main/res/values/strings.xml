@@ -9,4 +9,8 @@
     <string name="label_confirm_password">确认密码</string>
     <string name="register">注册</string>
     <string name="test">测试</string>
+    <string name="profile">我的</string>
+    <string name="receipt">账单</string>
+    <string name="chart">图表</string>
+    <string name="empty_data_tips">暂无数据</string>
 </resources>
