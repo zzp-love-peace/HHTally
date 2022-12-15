@@ -23,7 +23,6 @@ class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
     override fun initViewBinding() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 
     override fun initData() {

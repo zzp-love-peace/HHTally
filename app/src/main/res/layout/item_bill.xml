@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="128dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="6dp"
+    app:cardPreventCornerOverlap="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_bill"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_bill"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_home_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_bill_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            tools:text="账单名称"
+            app:layout_constraintStart_toEndOf="@+id/image_bill"
+            app:layout_constraintTop_toTopOf="@+id/image_bill"
+            app:layout_constraintBottom_toBottomOf="@+id/image_bill" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_bill_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            tools:text="+"
+            app:layout_constraintEnd_toStartOf="@+id/tv_bill_price"
+            app:layout_constraintTop_toTopOf="@+id/tv_bill_price"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_bill_price" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_bill_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            tools:text="0.00"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_bill_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_bill_name"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
