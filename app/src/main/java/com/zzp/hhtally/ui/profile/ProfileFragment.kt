@@ -6,15 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.zzp.hhtally.R
+import com.zzp.hhtally.base.BaseFragment
 
-class ProfileFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+class ProfileFragment : BaseFragment<IProfileView, ProfilePresenter>(), IProfileView {
+    override fun createPresenter(): ProfilePresenter {
+        TODO("Not yet implemented")
     }
+
+    override fun initViewBinding(inflater: LayoutInflater, container: ViewGroup?): View {
+        TODO("Not yet implemented")
+    }
+
+    override fun initData() {
+        TODO("Not yet implemented")
+    }
+
+    override fun initView() {
+        TODO("Not yet implemented")
+    }
+
+
 }

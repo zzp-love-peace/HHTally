@@ -1,6 +1,6 @@
 package com.zzp.hhtally.ui.login
 
-import com.zzp.hhtally.MainActivity
+import com.zzp.hhtally.ui.main.MainActivity
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseActivity
 import com.zzp.hhtally.data.User

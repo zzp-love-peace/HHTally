@@ -3,11 +3,7 @@ package com.zzp.hhtally.ui.login
 import com.zzp.hhtally.base.BasePresenter
 
 
-class LoginPresenter(baseView: ILoginView) : BasePresenter<ILoginView>() {
-
-    init {
-        attachView(baseView)
-    }
+class LoginPresenter(baseView: ILoginView) : BasePresenter<ILoginView>(baseView) {
 
     fun login(username: String, password: String) : Boolean {
         return true

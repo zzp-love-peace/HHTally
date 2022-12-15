@@ -2,9 +2,13 @@ package com.zzp.hhtally.base
 
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<V : BaseView> {
+abstract class BasePresenter<V : BaseView> (baseView: V){
 
     private var viewRef: WeakReference<V>? = null
+
+    init {
+        attachView(baseView)
+    }
 
     fun attachView(view: V) {
         viewRef = WeakReference<V>(view)
