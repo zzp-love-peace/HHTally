@@ -2,7 +2,7 @@ package com.zzp.hhtally.base
 
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<V : BaseView> (baseView: V){
+abstract class BasePresenter<V : BaseView>(baseView: V) {
 
     private var viewRef: WeakReference<V>? = null
 
@@ -25,7 +25,7 @@ abstract class BasePresenter<V : BaseView> (baseView: V){
         return viewRef != null && viewRef?.get() != null
     }
 
-    protected fun getView() :V?{
+    protected fun getView(): V? {
         return viewRef?.get()
     }
 

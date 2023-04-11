@@ -11,15 +11,15 @@ object BillDiffCalculator {
             newList,
             { oldItem: Any, newItem: Any ->
                 when {
-                    oldItem is User && newItem is User -> oldItem.username == newItem.username
-                    oldItem is Bill && newItem is Bill -> oldItem.name == newItem.name
+                    oldItem is User && newItem is User -> oldItem.userId == newItem.userId
+                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
                     else -> oldItem.javaClass == newItem.javaClass
                 }
             },
             { oldItem: Any, newItem: Any ->
                 when {
-                    oldItem is User && newItem is User -> oldItem.username == newItem.username
-                    oldItem is Bill && newItem is Bill -> oldItem.name == newItem.name
+                    oldItem is User && newItem is User -> oldItem.userId == newItem.userId
+                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
                     else -> oldItem.javaClass == newItem.javaClass && oldItem == newItem
                 }
             }
@@ -29,15 +29,15 @@ object BillDiffCalculator {
         SimpleDiffItemCallback(
             areItemSame = { oldItem: T, newItem: T ->
                 when {
-                    oldItem is User && newItem is User -> oldItem.username == newItem.username
-                    oldItem is Bill && newItem is Bill -> oldItem.name == newItem.name
+                    oldItem is User && newItem is User -> oldItem.userId == newItem.userId
+                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
                     else -> oldItem.javaClass == newItem.javaClass
                 }
             },
             areContentSame = { oldItem: T, newItem: T ->
                 when {
-                    oldItem is User && newItem is User -> oldItem.username == newItem.username
-                    oldItem is Bill && newItem is Bill -> oldItem.name == newItem.name
+                    oldItem is User && newItem is User -> oldItem.userId == newItem.userId
+                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
                     else -> oldItem.javaClass == newItem.javaClass && oldItem == newItem
                 }
             }

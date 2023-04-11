@@ -1,5 +1,8 @@
 package com.zzp.hhtally.ui.login
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import com.zzp.hhtally.ui.main.MainActivity
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseActivity
@@ -11,6 +14,9 @@ import com.zzp.hhtally.util.showToast
 class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
 
     private lateinit var binding: ActivityLoginBinding
+    private val prefs by lazy {
+        getPreferences(Context.MODE_PRIVATE)
+    }
 
     private val registerDialog by lazy {
         RegisterDialog(this)
@@ -26,28 +32,32 @@ class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
     }
 
     override fun initData() {
-        // 登录数据可保存用户名自动填充
-
     }
 
     override fun initView() {
         binding.apply {
             editName.requestFocus()
+            val username = prefs.getString("username", "") ?: ""
+            val password = prefs.getString("password", "") ?: ""
+            binding.editName .setText(username)
+            binding.editPassword.setText(password)
             textRegister.setOnClickListener {
                 registerDialog.show()
             }
             fabLogin.setOnClickListener {
-                "点击登录button".showToast()
-                val result = presenter.login(
+//                "点击登录button".showToast()
+
+                presenter.login(
                     editName.text.toString(),
                     editPassword.text.toString()
                 )
-                if (result) {
-                    showLoginSuccess("yes")
-                    startActivity(MainActivity::class.java, true)
-                } else {
-                    showLoginFailed("no")
-                }
+
+//                if (result) {
+//                    showLoginSuccess("yes")
+//                    startActivity(MainActivity::class.java, true)
+//                } else {
+//                    showLoginFailed("no")
+//                }
             }
         }
     }
@@ -63,8 +73,17 @@ class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
         }
     }
 
-    override fun doSuccess(user: User) {
-        TODO("Not yet implemented")
+    override fun doSuccess() {
+        val editor = prefs.edit()
+        val username = binding.editName.text.toString()
+        val password = binding.editPassword.text.toString()
+        editor.putString("username", username)
+        editor.putString("password", password)
+        editor.apply()
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

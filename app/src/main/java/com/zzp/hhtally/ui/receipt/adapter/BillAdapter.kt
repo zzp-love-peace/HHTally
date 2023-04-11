@@ -12,8 +12,8 @@ class BillAdapter(private val items: List<Bill>)
     : ListAdapter<Bill, BillAdapter.ViewHolder>(BillDiffCalculator.getCommonDiffItemCallback()) {
 
     inner class ViewHolder(binding: ItemBillBinding) : RecyclerView.ViewHolder(binding.root) {
-        val billName = binding.tvBillName
-        val billPrice = binding.tvBillPrice
+        val billLabel = binding.tvBillLabel
+        val billMoney = binding.tvBillMoney
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,7 +23,7 @@ class BillAdapter(private val items: List<Bill>)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val bill = items[position]
-        holder.billName.text = bill.name
-        holder.billPrice.text = bill.price.toString()
+        holder.billLabel.text = bill.label
+        holder.billMoney.text = bill.money.toString()
     }
 }

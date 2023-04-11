@@ -9,5 +9,5 @@ interface ILoginView : BaseView {
 
     fun showLoginFailed(errorMsg: String)
 
-    fun doSuccess(user: User)
+    fun doSuccess()
 }

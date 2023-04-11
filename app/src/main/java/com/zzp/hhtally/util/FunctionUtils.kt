@@ -3,6 +3,7 @@ package com.zzp.hhtally.util
 import android.util.Log
 import android.widget.Toast
 import com.trello.rxlifecycle4.LifecycleTransformer
+import com.trello.rxlifecycle4.components.support.RxAppCompatActivity
 import com.zzp.hhtally.base.MyApplication
 import com.zzp.hhtally.data.TAG
 import com.zzp.hhtally.network.HttpCallback
@@ -29,5 +30,3 @@ fun <T : Any> Observable<T>.convert2Main(): Observable<T> =
 
 fun <T : Any> Observable<T>.execute(lifecycle: LifecycleTransformer<T>, callback: HttpCallback<T>) =
     this.convert2Main().compose(lifecycle).subscribe(callback)
-
-

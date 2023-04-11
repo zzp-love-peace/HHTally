@@ -5,7 +5,7 @@ import com.zzp.hhtally.data.TEXT_IN_BASE_URL
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -19,7 +19,7 @@ object TextInRetrofitManager {
             .baseUrl(TEXT_IN_BASE_URL)
             .client(createOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
     }
 
