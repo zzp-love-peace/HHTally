@@ -18,22 +18,19 @@ abstract class BaseFragment<V:BaseView, P : BasePresenter<V>>: RxFragment(), Bas
 
     protected abstract fun initView()
 
-//    protected fun initListener() {}
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         presenter = createPresenter()
-        initData()
         return initViewBinding(inflater, container)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        initListener()
         initView()
+        initData()
     }
 
     override fun onDestroyView() {

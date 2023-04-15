@@ -5,7 +5,11 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zzp.hhtally.databinding.DialogRegisterAccountBinding
+import com.zzp.hhtally.network.HttpCallback
+import com.zzp.hhtally.network.HttpResult
+import com.zzp.hhtally.network.RetrofitManager
 import com.zzp.hhtally.ui.login.LoginActivity
+import com.zzp.hhtally.util.execute
 import com.zzp.hhtally.util.showToast
 
 class RegisterDialog(activity: LoginActivity) {
@@ -27,8 +31,15 @@ class RegisterDialog(activity: LoginActivity) {
                 val confirmPassword = editConfirmPassword.text?.trim().toString()
                 if (checkRegisterStatus(name, password, confirmPassword)) {
                     dialogRegisterAccountBinding.loadingProgress.isVisible = true
-                    "注册成功-假的".showToast()
-                    registerDialog.dismiss()
+                    RetrofitManager.apiService.register(name, password).execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<Any?>>(){
+                        override fun onSuccess(model: HttpResult<Any?>) {
+                            if (model.code == 200) {
+                                registerDialog.dismiss()
+                            }
+                            model.msg.showToast()
+                            dialogRegisterAccountBinding.loadingProgress.isVisible = false
+                        }
+                    })
                 }
             }
             editName.doAfterTextChanged {

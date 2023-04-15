@@ -3,7 +3,6 @@ package com.zzp.hhtally.util
 import android.util.Log
 import android.widget.Toast
 import com.trello.rxlifecycle4.LifecycleTransformer
-import com.trello.rxlifecycle4.components.support.RxAppCompatActivity
 import com.zzp.hhtally.base.MyApplication
 import com.zzp.hhtally.data.TAG
 import com.zzp.hhtally.network.HttpCallback

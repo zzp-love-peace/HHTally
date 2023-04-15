@@ -15,15 +15,12 @@ abstract class BaseActivity<V : BaseView, P : BasePresenter<V>> : RxAppCompatAct
 
     protected abstract fun initView()
 
-//    protected fun initListener() {}
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewBinding()
         presenter = createPresenter()
-        initData()
-//        initListener()
         initView()
+        initData()
     }
 
     override fun onDestroy() {

@@ -21,9 +21,11 @@ class LoginPresenter(baseView: ILoginView) : BasePresenter<ILoginView>(baseView)
         RetrofitManager.apiService.login(username, password)
             .execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<String>>() {
                 override fun onSuccess(model: HttpResult<String>) {
-                    view.showLoginSuccess(model.msg)
-                    view.doSuccess()
-                    UserData.token = model.data
+                    if (model.code == 200) {
+                        view.showLoginSuccess(model.msg)
+                        view.doSuccess()
+                        UserData.token = model.data
+                    }
                     model.msg.showToast()
                 }
             })

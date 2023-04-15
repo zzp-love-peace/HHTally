@@ -12,7 +12,7 @@ import retrofit2.HttpException
 abstract class HttpCallback<T>: DisposableObserver<T>() {
 
     abstract fun onSuccess(model: T)
-    
+
     private fun onFailure(msg: String) {
         msg.showToast()
     }
