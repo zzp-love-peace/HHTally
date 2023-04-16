@@ -13,6 +13,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.trello.rxlifecycle4.components.support.RxFragment
 import com.zzp.hhtally.base.BasePresenter
+import com.zzp.hhtally.data.*
 import com.zzp.hhtally.data.chart.MonthInfo
 import com.zzp.hhtally.data.chart.WeekInfo
 import com.zzp.hhtally.data.chart.YearInfo
@@ -24,12 +25,7 @@ import com.zzp.hhtally.util.logD
 import com.zzp.hhtally.util.showToast
 import java.util.Calendar
 
-const val TYPE_EXPENSE = 0
-const val TYPE_INCOME = 1
 
-const val TYPE_YEARLY = 0
-const val TYPE_MONTHLY = 1
-const val TYPE_WEEKLY = 2
 
 class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView) {
 

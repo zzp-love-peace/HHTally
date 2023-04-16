@@ -2,7 +2,6 @@ package com.zzp.hhtally.ui.receipt
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,21 +11,18 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
 import com.zzp.hhtally.data.Bill
-import com.zzp.hhtally.data.TAG
 import com.zzp.hhtally.databinding.FragmentReceiptBinding
-import com.zzp.hhtally.ui.receipt.adapter.BillAdapter
 import com.zzp.hhtally.ui.receipt.adapter.ViewPagerAdapter
 import com.zzp.hhtally.ui.receipt.add.AddReceiptActivity
 import com.zzp.hhtally.ui.receipt.fragment.ReceiptListFragment
 import com.zzp.hhtally.util.LabelUtil
-import com.zzp.hhtally.util.showToast
 
 
 class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceiptView {
 
     private lateinit var binding: FragmentReceiptBinding
 
-    private lateinit var myActivityLauncher: ActivityResultLauncher<Intent>
+    private lateinit var addReceiptActivityLauncher: ActivityResultLauncher<Intent>
 
     private val expenseFragment = ReceiptListFragment.newExpenseInstance()
     private val incomeFragment = ReceiptListFragment.newIncomeInstance()
@@ -41,7 +37,7 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
     }
 
     override fun initData() {
-        myActivityLauncher =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
+        addReceiptActivityLauncher =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
             if(activityResult.resultCode == Activity.RESULT_OK){
                 val result = activityResult.data?.getIntExtra("result", -1)
                 if (result == 0) {
@@ -77,7 +73,7 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         when (item.itemId) {
             R.id.action_add -> {
                 val intent = Intent(requireContext(), AddReceiptActivity::class.java)
-                myActivityLauncher.launch(intent)
+                addReceiptActivityLauncher.launch(intent)
             }
         }
         return super.onOptionsItemSelected(item)

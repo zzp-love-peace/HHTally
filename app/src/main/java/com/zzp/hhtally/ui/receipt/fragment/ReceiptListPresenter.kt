@@ -1,5 +1,6 @@
 package com.zzp.hhtally.ui.receipt.fragment
 
+import android.util.Log
 import com.trello.rxlifecycle4.components.support.RxFragment
 import com.zzp.hhtally.base.BasePresenter
 import com.zzp.hhtally.data.Bill
@@ -19,7 +20,10 @@ class ReceiptListPresenter(baseView: IReceiptListView) : BasePresenter<IReceiptL
             override fun onSuccess(model: HttpResult<List<Bill>>) {
                 if (model.code == 200) {
                     val billList = model.data.reversed()
+                    if (UserData.billList.isNotEmpty()) UserData.billList.clear()
                     UserData.billList.addAll(billList)
+                    if (UserData.expenseBillList.isNotEmpty()) UserData.expenseBillList.clear()
+                    if (UserData.incomeBillList.isNotEmpty())UserData.incomeBillList.clear()
                     for(bill in billList) {
                         if (bill.money > 0) {
                             UserData.expenseBillList.add(bill)
@@ -27,6 +31,7 @@ class ReceiptListPresenter(baseView: IReceiptListView) : BasePresenter<IReceiptL
                             UserData.incomeBillList.add(bill)
                         }
                     }
+                    Log.d("TAG", "onSuccess: " + UserData.expenseBillList)
                     view.doRefreshSuccess()
                 } else {
                     view.doRefreshError()

@@ -14,6 +14,10 @@ const val TEXT_IN_BASE_URL = "https://api.textin.com/"
 
 const val TOKEN_VALUE = "Authorization"
 
-const val FRAGMENT_EXPENSE = 0
+const val TYPE_EXPENSE = 0
 
-const val FRAGMENT_INCOME = 1
+const val TYPE_INCOME = 1
+
+const val TYPE_YEARLY = 0
+const val TYPE_MONTHLY = 1
+const val TYPE_WEEKLY = 2

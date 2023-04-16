@@ -1,27 +1,26 @@
 package com.zzp.hhtally.ui.receipt.fragment
 
-import android.os.Bundle
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.zzp.hhtally.R
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.zzp.hhtally.base.BaseFragment
-import com.zzp.hhtally.data.Bill
-import com.zzp.hhtally.data.FRAGMENT_EXPENSE
-import com.zzp.hhtally.data.FRAGMENT_INCOME
+import com.zzp.hhtally.data.TYPE_EXPENSE
+import com.zzp.hhtally.data.TYPE_INCOME
 import com.zzp.hhtally.data.UserData
 import com.zzp.hhtally.databinding.FragmentReceiptListBinding
-import com.zzp.hhtally.ui.receipt.IReceiptView
-import com.zzp.hhtally.ui.receipt.ReceiptPresenter
 import com.zzp.hhtally.ui.receipt.adapter.BillAdapter
 
 class ReceiptListFragment(private val fragmentType: Int) : BaseFragment<IReceiptListView, ReceiptListPresenter>(),
     IReceiptListView {
     
     private lateinit var binding: FragmentReceiptListBinding
-    private val billAdapter = BillAdapter()
+    private lateinit var billAdapter : BillAdapter
+    private lateinit var removeReceiptActivityLauncher: ActivityResultLauncher<Intent>
     override fun createPresenter()= ReceiptListPresenter(this)
 
     override fun initViewBinding(inflater: LayoutInflater, container: ViewGroup?): View {
@@ -30,6 +29,12 @@ class ReceiptListFragment(private val fragmentType: Int) : BaseFragment<IReceipt
     }
 
     override fun initData() {
+        removeReceiptActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
+            if(activityResult.resultCode == Activity.RESULT_OK){
+                presenter.getAllBills()
+            }
+        }
+        billAdapter = BillAdapter(requireContext(), removeReceiptActivityLauncher)
         presenter.getAllBills()
     }
 
@@ -40,10 +45,10 @@ class ReceiptListFragment(private val fragmentType: Int) : BaseFragment<IReceipt
     override fun doRefreshSuccess() {
         binding.rvBill.visibility = View.VISIBLE
         binding.loadingContainer.root.visibility = View.GONE
-        if (fragmentType == FRAGMENT_EXPENSE) {
-            billAdapter.submitList(UserData.expenseBillList)
-        } else if (fragmentType == FRAGMENT_INCOME) {
-            billAdapter.submitList(UserData.incomeBillList)
+        if (fragmentType == TYPE_EXPENSE) {
+            billAdapter.submitList(UserData.expenseBillList.toList())
+        } else if (fragmentType == TYPE_INCOME) {
+            billAdapter.submitList(UserData.incomeBillList.toList())
         }
     }
 
@@ -55,10 +60,10 @@ class ReceiptListFragment(private val fragmentType: Int) : BaseFragment<IReceipt
     companion object {
         @JvmStatic
         fun newExpenseInstance() =
-            ReceiptListFragment(FRAGMENT_EXPENSE)
+            ReceiptListFragment(TYPE_EXPENSE)
 
         @JvmStatic
         fun newIncomeInstance() =
-            ReceiptListFragment(FRAGMENT_INCOME)
+            ReceiptListFragment(TYPE_INCOME)
     }
 }

@@ -19,8 +19,8 @@
             android:id="@+id/image_bill"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_home_24"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_bill"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,21 +39,49 @@
             android:id="@+id/tv_bill_symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            tools:text="+"
-            app:layout_constraintEnd_toStartOf="@+id/tv_bill_money"
-            app:layout_constraintTop_toTopOf="@+id/tv_bill_money"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_bill_money" />
+            android:layout_marginStart="16dp"
+            android:textColor="@color/md_theme_light_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_bill_label"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="￥" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_bill_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            tools:text="0.00"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/md_theme_light_primary"
             app:layout_constraintBottom_toBottomOf="@+id/tv_bill_label"
+            app:layout_constraintStart_toEndOf="@+id/tv_bill_symbol"
             app:layout_constraintTop_toTopOf="@+id/tv_bill_label"
-            app:layout_constraintEnd_toEndOf="parent" />
+            tools:text="0.00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_bill_shopkeeper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="7"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_bill_label"
+            app:layout_constraintEnd_toStartOf="@+id/tv_bill_time"
+            app:layout_constraintStart_toEndOf="@+id/tv_bill_money"
+            app:layout_constraintTop_toTopOf="@+id/tv_bill_label"
+            tools:text="麦当劳"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_bill_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_bill_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_bill_label"
+            tools:text="2023/4/16" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
