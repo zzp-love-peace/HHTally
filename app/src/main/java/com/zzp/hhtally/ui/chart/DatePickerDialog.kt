@@ -3,9 +3,9 @@ package com.zzp.hhtally.ui.chart
 import android.content.Context
 import android.view.LayoutInflater
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.zzp.hhtally.R
 import com.zzp.hhtally.databinding.DialogDatePickerBinding
 import com.zzp.hhtally.util.logD
-import com.zzp.hhtally.util.showToast
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -16,10 +16,10 @@ class DatePickerDialog(context: Context, ok: (String, String) -> Unit, neutral: 
 
     private val datePickerDialog by lazy {
         MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.content_description_data_range)
             .setView(dialogDatePickerBinding.root)
             .setPositiveButton("确定") { _, _ ->
                 ok(year.toString(), month.toString())
-                "$year/$month".showToast()
             }
             .setNeutralButton("全年") { _, _ ->
                 neutral(year.toString())
