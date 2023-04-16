@@ -23,7 +23,6 @@ class ReceiptPresenter(baseView: IReceiptView) : BasePresenter<IReceiptView>(bas
                         LabelUtil.labelList.clear()
                         LabelUtil.labelList.addAll(model.data)
                         getAllBills()
-                        //TODO:UI更新
                     } else {
                         model.msg.showToast()
                     }
@@ -39,7 +38,7 @@ class ReceiptPresenter(baseView: IReceiptView) : BasePresenter<IReceiptView>(bas
             override fun onSuccess(model: HttpResult<Int>) {
                 if (model.code == 200) {
                     LabelUtil.labelList.add(Label(model.data, labelName, null))
-                    //TODO:UI更新
+
                 } else {
                     model.msg.showToast()
                 }

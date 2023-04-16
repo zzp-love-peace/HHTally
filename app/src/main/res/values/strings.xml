@@ -19,7 +19,10 @@
     <string name="string_time">时间</string>
     <string name="string_shopkeeper">商家</string>
     <string name="string_remark">备注</string>
-    <string name="string_￥">￥</string>
+    <string name="string_yuan">￥</string>
     <string name="string_click_to_input">点击输入</string>
     <string name="string_remark_hint">...</string>
+    <string name="string_commit">提交</string>
+    <string name="string_add">添加</string>
+    <string name="string_search">搜索</string>
 </resources>
