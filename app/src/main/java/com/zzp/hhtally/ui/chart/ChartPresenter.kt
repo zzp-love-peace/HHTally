@@ -13,7 +13,12 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.trello.rxlifecycle4.components.support.RxFragment
 import com.zzp.hhtally.base.BasePresenter
+
 import com.zzp.hhtally.data.*
+
+import com.zzp.hhtally.data.TYPE_EXPENSE
+import com.zzp.hhtally.data.TYPE_INCOME
+
 import com.zzp.hhtally.data.chart.MonthInfo
 import com.zzp.hhtally.data.chart.WeekInfo
 import com.zzp.hhtally.data.chart.YearInfo
@@ -25,13 +30,11 @@ import com.zzp.hhtally.util.logD
 import com.zzp.hhtally.util.showToast
 import java.util.Calendar
 
-
-
 class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView) {
 
     var year = Calendar.getInstance().get(Calendar.YEAR).toString()
     var month = (Calendar.getInstance().get(Calendar.MONTH) + 1).toString()
-    var day = (Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).toString()
+    private var day = (Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).toString()
     var dateType = TYPE_MONTHLY
     var billType = TYPE_EXPENSE
 
@@ -157,11 +160,15 @@ class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView)
 
     private fun getPieData(data: List<Double>): PieData {
         val visitors = mutableListOf<PieEntry>()
+        data.toString().logD("pie")
         data.forEachIndexed { index, d ->
             if (!d.equals(0.0)) {
                 when (dateType) {
-                    TYPE_WEEKLY, TYPE_MONTHLY ->
+                    TYPE_WEEKLY ->
                         visitors.add(PieEntry(d.toFloat(), "${day.toInt() - index}日"))
+
+                    TYPE_MONTHLY ->
+                        visitors.add(PieEntry(d.toFloat(), "${index}日"))
 
                     TYPE_YEARLY ->
                         visitors.add(PieEntry(d.toFloat(), "${index}月"))
@@ -187,7 +194,7 @@ class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView)
         val barDataSet = BarDataSet(visitors, "Visitors").apply {
             colors = ColorTemplate.MATERIAL_COLORS.toList()
             valueTextColor = Color.BLACK
-            valueTextSize = 16f
+            // valueTextSize = 16f
         }
 
         return BarData(barDataSet)

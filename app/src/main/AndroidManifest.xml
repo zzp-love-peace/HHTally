@@ -20,6 +20,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.profile.report.ReportActivity"
+            android:exported="false"
+            android:label="@string/title_activity_yearly_report"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -31,7 +36,6 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.receipt.add.AddReceiptActivity"
             android:exported="false" />

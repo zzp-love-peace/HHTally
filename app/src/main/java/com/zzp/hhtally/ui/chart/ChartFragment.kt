@@ -11,7 +11,8 @@ import com.github.mikephil.charting.data.PieData
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
-import com.zzp.hhtally.data.*
+import com.zzp.hhtally.data.TYPE_EXPENSE
+import com.zzp.hhtally.data.TYPE_INCOME
 import com.zzp.hhtally.databinding.FragmentChartBinding
 import com.zzp.hhtally.util.getColorByAttr
 
@@ -66,11 +67,11 @@ class ChartFragment : BaseFragment<IChartView, ChartPresenter>(), IChartView {
             pieChart.apply {
                 data = pieData
                 legend.isEnabled = false
-                animateY(800, Easing.EaseInOutQuad)
-                setExtraOffsets(24f, 0f, 24f, 0f)
-                setEntryLabelColor(colorOnSurface)
-                setEntryLabelTextSize(11f)
                 description.isEnabled = false
+                animateY(800, Easing.EaseInOutQuad)
+                // setExtraOffsets(24f, 0f, 24f, 0f)
+                setEntryLabelColor(colorOnSurface)
+                // setEntryLabelTextSize(11f)
                 highlightValues(null)
                 setUsePercentValues(true)
                 setHoleColor(Color.TRANSPARENT)
@@ -79,10 +80,10 @@ class ChartFragment : BaseFragment<IChartView, ChartPresenter>(), IChartView {
 
             barChart.apply {
                 data = barData
-                description.isEnabled = false
                 legend.isEnabled = false
+                description.isEnabled = false
                 animateY(650, Easing.EaseInOutQuad)
-                setExtraOffsets(12f, 0f, 24f, 0f)
+                // setExtraOffsets(12f, 0f, 24f, 0f)
                 setFitBars(true)
                 setDrawBorders(false)
                 setDrawGridBackground(false)
@@ -92,6 +93,7 @@ class ChartFragment : BaseFragment<IChartView, ChartPresenter>(), IChartView {
 
             lineChart.apply {
                 data = lineData
+                legend.isEnabled = false
                 description.isEnabled = false
                 animateY(800, Easing.EaseInOutQuad)
                 setDrawBorders(false)
@@ -138,16 +140,13 @@ class ChartFragment : BaseFragment<IChartView, ChartPresenter>(), IChartView {
                         .setNegativeButton("取消") { _, _ -> }
                         .create()
                         .show()
-                    return@setOnMenuItemClickListener true
                 }
 
                 R.id.dataRange -> {
                     datePickerDialog.show()
-                    return@setOnMenuItemClickListener true
                 }
-
-                else -> false
             }
+            true
         }
     }
 

@@ -39,8 +39,11 @@
     <string name="take_photo">拍照</string>
     <string name="from_album">从相册获取</string>
     <string name="string_cancel">取消</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="string_delete">删除</string>
+    <string name="yearly_report">年度报表</string>
+    <string name="monthly_report">月度报表</string>
+    <string name="statistics">统计</string>
+    <string name="title_activity_yearly_report">YearlyReportActivity</string>
 
 </resources>

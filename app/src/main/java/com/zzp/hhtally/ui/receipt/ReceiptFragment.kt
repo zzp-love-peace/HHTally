@@ -2,7 +2,16 @@ package com.zzp.hhtally.ui.receipt
 
 import android.app.Activity
 import android.content.Intent
+
 import android.view.*
+
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -37,14 +46,16 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
     }
 
     override fun initData() {
-        addReceiptActivityLauncher =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
-            if(activityResult.resultCode == Activity.RESULT_OK){
-                val result = activityResult.data?.getIntExtra("result", -1)
-                if (result == 0) {
-                    presenter.getAllBills()
+
+        addReceiptActivityLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == Activity.RESULT_OK) {
+                    val result = activityResult.data?.getIntExtra("result", -1)
+                    if (result == 0) {
+                        presenter.getAllBills()
+                    }
                 }
             }
-        }
         if (LabelUtil.labelList.isEmpty()) presenter.getAllLabels()
     }
 
@@ -56,11 +67,11 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         data.add(expenseFragment)
         data.add(incomeFragment)
         val tabTitle = ArrayList<String>()
-        tabTitle.add("支出")
-        tabTitle.add("收入")
+        tabTitle.add(resources.getString(R.string.expense))
+        tabTitle.add(resources.getString(R.string.income))
         val viewPagerAdapter = ViewPagerAdapter(requireActivity(), data)
         binding.viewPager2.adapter = viewPagerAdapter
-        TabLayoutMediator(binding.tabLayout,binding.viewPager2){ tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()
     }
