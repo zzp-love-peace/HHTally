@@ -1,5 +1,6 @@
 package com.zzp.hhtally.ui.receipt.add
 
+import android.net.Uri
 import com.trello.rxlifecycle4.components.RxActivity
 import com.trello.rxlifecycle4.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle4.components.support.RxFragment
@@ -27,6 +28,9 @@ class AddReceiptPresenter(baseView: IAddReceiptView): BasePresenter<IAddReceiptV
         })
     }
 
+    fun analyzeImage(image: Uri) {
+
+    }
 
 
 

@@ -26,7 +26,7 @@
     <string name="string_commit">提交</string>
     <string name="string_add">添加</string>
     <string name="string_search">搜索</string>
-  <string name="recent_week">近7天账单</string>
+    <string name="recent_week">近7天账单</string>
     <string name="data_range">日期选择</string>
     <string name="content_description_recent_week">选择查看近7天的账单</string>
     <string name="content_description_data_range">选择想要查看账单的日期</string>
@@ -35,5 +35,11 @@
     <string name="income">收入</string>
     <string name="year">年</string>
     <string name="month">月</string>
+    <string name="string_type">类型</string>
+    <string name="take_photo">拍照</string>
+    <string name="from_album">从相册获取</string>
+    <string name="string_cancel">取消</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

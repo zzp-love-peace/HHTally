@@ -1,25 +1,35 @@
 package com.zzp.hhtally.ui.receipt
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
 import com.zzp.hhtally.data.Bill
 import com.zzp.hhtally.data.TAG
 import com.zzp.hhtally.databinding.FragmentReceiptBinding
 import com.zzp.hhtally.ui.receipt.adapter.BillAdapter
+import com.zzp.hhtally.ui.receipt.adapter.ViewPagerAdapter
 import com.zzp.hhtally.ui.receipt.add.AddReceiptActivity
+import com.zzp.hhtally.ui.receipt.fragment.ReceiptListFragment
 import com.zzp.hhtally.util.LabelUtil
 import com.zzp.hhtally.util.showToast
 
 
 class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceiptView {
 
-    private val billAdapter = BillAdapter()
-
     private lateinit var binding: FragmentReceiptBinding
+
+    private lateinit var myActivityLauncher: ActivityResultLauncher<Intent>
+
+    private val expenseFragment = ReceiptListFragment.newExpenseInstance()
+    private val incomeFragment = ReceiptListFragment.newIncomeInstance()
 
     override fun createPresenter(): ReceiptPresenter {
         return ReceiptPresenter(this)
@@ -31,14 +41,32 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
     }
 
     override fun initData() {
-        presenter.getAllLabels()
+        myActivityLauncher =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
+            if(activityResult.resultCode == Activity.RESULT_OK){
+                val result = activityResult.data?.getIntExtra("result", -1)
+                if (result == 0) {
+                    presenter.getAllBills()
+                }
+            }
+        }
+        if (LabelUtil.labelList.isEmpty()) presenter.getAllLabels()
     }
 
     override fun initView() {
         val activity = requireActivity() as AppCompatActivity
         activity.setSupportActionBar(binding.toolbar)
         setHasOptionsMenu(true)
-        binding.rvBill.adapter = billAdapter
+        val data = ArrayList<Fragment>()
+        data.add(expenseFragment)
+        data.add(incomeFragment)
+        val tabTitle = ArrayList<String>()
+        tabTitle.add("支出")
+        tabTitle.add("收入")
+        val viewPagerAdapter = ViewPagerAdapter(requireActivity(), data)
+        binding.viewPager2.adapter = viewPagerAdapter
+        TabLayoutMediator(binding.tabLayout,binding.viewPager2){ tab, position ->
+            tab.text = tabTitle[position]
+        }.attach()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -49,22 +77,23 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         when (item.itemId) {
             R.id.action_add -> {
                 val intent = Intent(requireContext(), AddReceiptActivity::class.java)
-                startActivity(intent)
+                myActivityLauncher.launch(intent)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun doRefreshSuccess(newBillList: List<Bill>) {
-        binding.rvBill.visibility = View.VISIBLE
-        binding.loadingContainer.root.visibility = View.GONE
-        Log.d(TAG, "doRefreshSuccess: ${newBillList.size}")
-        billAdapter.submitList(newBillList)
+    override fun doRefreshSuccess(expenseBillList: List<Bill>, incomeBillList: List<Bill>) {
+        expenseFragment.doRefreshSuccess()
+        incomeFragment.doRefreshSuccess()
+
     }
 
     override fun doRefreshError() {
-        binding.rvBill.visibility = View.GONE
-        binding.loadingContainer.root.visibility = View.VISIBLE
+        expenseFragment.doRefreshError()
+        incomeFragment.doRefreshError()
+
+
     }
 }
 
