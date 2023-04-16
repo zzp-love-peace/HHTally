@@ -2,8 +2,12 @@ package com.zzp.hhtally.ui.receipt
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -12,14 +16,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
 import com.zzp.hhtally.data.Bill
-import com.zzp.hhtally.data.TAG
 import com.zzp.hhtally.databinding.FragmentReceiptBinding
-import com.zzp.hhtally.ui.receipt.adapter.BillAdapter
 import com.zzp.hhtally.ui.receipt.adapter.ViewPagerAdapter
 import com.zzp.hhtally.ui.receipt.add.AddReceiptActivity
 import com.zzp.hhtally.ui.receipt.fragment.ReceiptListFragment
 import com.zzp.hhtally.util.LabelUtil
-import com.zzp.hhtally.util.showToast
 
 
 class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceiptView {
@@ -41,14 +42,15 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
     }
 
     override fun initData() {
-        myActivityLauncher =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
-            if(activityResult.resultCode == Activity.RESULT_OK){
-                val result = activityResult.data?.getIntExtra("result", -1)
-                if (result == 0) {
-                    presenter.getAllBills()
+        myActivityLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                if (activityResult.resultCode == Activity.RESULT_OK) {
+                    val result = activityResult.data?.getIntExtra("result", -1)
+                    if (result == 0) {
+                        presenter.getAllBills()
+                    }
                 }
             }
-        }
         if (LabelUtil.labelList.isEmpty()) presenter.getAllLabels()
     }
 
@@ -60,11 +62,11 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         data.add(expenseFragment)
         data.add(incomeFragment)
         val tabTitle = ArrayList<String>()
-        tabTitle.add("支出")
-        tabTitle.add("收入")
+        tabTitle.add(resources.getString(R.string.expense))
+        tabTitle.add(resources.getString(R.string.income))
         val viewPagerAdapter = ViewPagerAdapter(requireActivity(), data)
         binding.viewPager2.adapter = viewPagerAdapter
-        TabLayoutMediator(binding.tabLayout,binding.viewPager2){ tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()
     }

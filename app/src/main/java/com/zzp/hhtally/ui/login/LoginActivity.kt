@@ -15,7 +15,8 @@ class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
 
     private lateinit var binding: ActivityLoginBinding
     private val prefs by lazy {
-        getPreferences(Context.MODE_PRIVATE)
+        // getPreferences(Context.MODE_PRIVATE)
+        getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
     }
 
     private val registerDialog by lazy {
@@ -39,7 +40,7 @@ class LoginActivity : BaseActivity<ILoginView, LoginPresenter>(), ILoginView {
             editName.requestFocus()
             val username = prefs.getString("username", "") ?: ""
             val password = prefs.getString("password", "") ?: ""
-            binding.editName .setText(username)
+            binding.editName.setText(username)
             binding.editPassword.setText(password)
             textRegister.setOnClickListener {
                 registerDialog.show()

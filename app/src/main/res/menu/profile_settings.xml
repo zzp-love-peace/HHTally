@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/receipt_settings"
+        android:title="@string/receipt">
+        <menu>
+            <item
+                android:id="@+id/settings_label"
+                android:icon="@drawable/ic_label"
+                android:iconTint="?attr/colorControlNormal"
+                android:title="@string/string_label"
+                app:showAsAction="always" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/statistics_settings"
+        android:title="@string/statistics">
+        <menu>
+            <item
+                android:id="@+id/settings_yearly_report"
+                android:icon="@drawable/ic_yearly_report_24"
+                android:title="@string/yearly_report"
+                app:showAsAction="always" />
+
+            <item
+                android:id="@+id/settings_monthly_report"
+                android:icon="@drawable/ic_monthly_report_24"
+                android:title="@string/monthly_report"
+                app:showAsAction="always" />
+        </menu>
+    </item>
+
+</menu>
