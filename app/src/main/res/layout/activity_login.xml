@@ -5,30 +5,30 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewLogo"
         android:layout_width="144dp"
         android:layout_height="144dp"
-        app:srcCompat="@drawable/ic_logo_48"
-        android:id="@+id/imageViewLogo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="128dp"
-        android:contentDescription="@string/logo" />
+        android:contentDescription="@string/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logo_48" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/input_layout_margin"
-        android:layout_marginEnd="@dimen/input_layout_margin"
         android:layout_marginTop="@dimen/input_layout_margin"
-        app:startIconDrawable="@drawable/ic_account_24"
+        android:layout_marginEnd="@dimen/input_layout_margin"
         app:endIconDrawable="@drawable/ic_clear_24"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
+        app:startIconDrawable="@drawable/ic_account_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_name"
@@ -39,8 +39,8 @@
             android:maxLength="50"
             android:singleLine="true"
             android:textColor="?colorOnSurface"
-            android:textSize="@dimen/hint_text_size"
-            android:textColorHint="#757575" />
+            android:textColorHint="#757575"
+            android:textSize="@dimen/hint_text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,14 +49,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/input_layout_margin"
-        android:layout_marginEnd="@dimen/input_layout_margin"
         android:layout_marginTop="@dimen/input_layout_margin"
-        app:startIconDrawable="@drawable/ic_password_24"
-        app:passwordToggleEnabled="true"
+        android:layout_marginEnd="@dimen/input_layout_margin"
         app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@+id/til_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_name"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_password_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_password"
@@ -68,8 +68,8 @@
             android:maxLength="50"
             android:singleLine="true"
             android:textColor="?colorOnSurface"
-            android:textSize="16sp"
-            android:textColorHint="#757575" />
+            android:textColorHint="#757575"
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,8 +80,8 @@
         android:layout_margin="@dimen/fab_margin"
         android:text="@string/login"
         app:icon="@drawable/ic_login_24"
-        app:layout_constraintTop_toBottomOf="@+id/til_password"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_register"
@@ -92,7 +92,7 @@
         android:text="@string/hint_register"
         android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/fab_login"
-        app:layout_constraintTop_toBottomOf="@+id/til_password"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

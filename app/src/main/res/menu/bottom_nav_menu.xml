@@ -7,8 +7,8 @@
         android:title="@string/chart" />
 
     <item
-        android:checked="true"
         android:id="@+id/navigation_receipt"
+        android:checked="true"
         android:icon="@drawable/ic_receipt_24"
         android:title="@string/receipt" />
 

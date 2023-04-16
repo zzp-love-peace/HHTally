@@ -18,12 +18,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
         android:paddingTop="20dp"
-        android:paddingBottom="12dp"
         android:paddingEnd="12dp"
-        android:paddingStart="20dp">
+        android:paddingBottom="12dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -56,15 +56,15 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <LinearLayout
             android:id="@+id/layout_photo"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:background="@drawable/bg_layout_photo"
             android:gravity="center"
-            android:orientation="vertical"
-            android:background="@drawable/bg_layout_photo">
+            android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="30dp"
@@ -84,39 +84,37 @@
         android:layout_height="1.5dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/md_theme_light_surfaceTint"
-        />
+        android:background="@color/md_theme_light_surfaceTint" />
 
     <LinearLayout
         android:id="@+id/layout_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="30dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:gravity="center_vertical"
-        >
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_label"/>
+            android:src="@drawable/ic_label" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/string_label"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:textSize="16sp"
-            tools:text="测试标签"
-            />
+            tools:text="测试标签" />
     </LinearLayout>
 
     <View
@@ -124,31 +122,29 @@
         android:layout_height="1dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/md_theme_light_secondary"
-        />
+        android:background="@color/md_theme_light_secondary" />
 
     <LinearLayout
         android:id="@+id/layout_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="30dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:gravity="center_vertical"
-        >
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_date"/>
+            android:src="@drawable/ic_date" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/string_time"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_time"
@@ -156,8 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:textSize="16sp"
-            tools:text="2023/4/15"
-            />
+            tools:text="2023/4/15" />
     </LinearLayout>
 
     <View
@@ -165,41 +160,39 @@
         android:layout_height="1dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/md_theme_light_secondary"
-        />
+        android:background="@color/md_theme_light_secondary" />
 
     <LinearLayout
         android:id="@+id/layout_shopkeeper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="30dp"
         android:gravity="center_vertical"
-        >
+        android:orientation="horizontal">
+
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_shopkeeper"/>
+            android:src="@drawable/ic_shopkeeper" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/string_shopkeeper"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_shopkeeper"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginStart="25dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:autofillHints=""
             android:background="@null"
             android:hint="@string/string_click_to_input"
-            android:autofillHints=""
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
     </LinearLayout>
 
     <View
@@ -207,29 +200,30 @@
         android:layout_height="1dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/md_theme_light_secondary"
-        />
+        android:background="@color/md_theme_light_secondary" />
 
     <LinearLayout
         android:id="@+id/layout_remark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="30dp"
         android:gravity="start">
+
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_remark"/>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/string_remark"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/et_remark"
             android:layout_width="match_parent"
@@ -237,14 +231,15 @@
             android:layout_marginStart="25dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:background="@null"
             android:layout_marginEnd="30dp"
             android:inputType="textMultiLine"
             android:autofillHints=""
+            android:background="@null"
             android:hint="@string/string_remark_hint"
             android:maxLines="5"
             android:gravity="start"
             />
+
     </LinearLayout>
 
 </LinearLayout>

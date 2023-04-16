@@ -19,6 +19,10 @@ fun String.logD(title: String = "logD") {
     Log.d(TAG, "$title===>: $this")
 }
 
+fun Int.logD(title: String = "logD") {
+    Log.d(TAG, "$title===>: $this")
+}
+
 fun String.showToast() {
     Toast.makeText(MyApplication.context, this, Toast.LENGTH_SHORT).show()
 }
