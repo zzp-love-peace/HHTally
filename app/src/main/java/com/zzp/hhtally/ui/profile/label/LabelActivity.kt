@@ -3,6 +3,8 @@ package com.zzp.hhtally.ui.profile.label
 import android.view.View
 import android.widget.EditText
 import androidx.core.view.setPadding
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseActivity
@@ -61,7 +63,13 @@ class LabelActivity : BaseActivity<ILabelView, LabelPresenter>(), ILabelView {
             toolbar.setNavigationOnClickListener {
                 finish()
             }
-            rvLabel.adapter = labelAdapter
+            val flexboxLayoutManager = FlexboxLayoutManager(this@LabelActivity).apply {
+                justifyContent = JustifyContent.SPACE_AROUND
+            }
+            rvLabel.apply {
+                layoutManager = flexboxLayoutManager
+                adapter = labelAdapter
+            }
 
             addLabel.setOnClickListener {
                 addDialog.show()
