@@ -19,8 +19,8 @@ abstract class BaseActivity<V : BaseView, P : BasePresenter<V>> : RxAppCompatAct
         super.onCreate(savedInstanceState)
         initViewBinding()
         presenter = createPresenter()
-        initView()
         initData()
+        initView()
     }
 
     override fun onDestroy() {

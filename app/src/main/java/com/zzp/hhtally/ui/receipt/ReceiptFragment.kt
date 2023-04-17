@@ -2,12 +2,16 @@ package com.zzp.hhtally.ui.receipt
 
 import android.app.Activity
 import android.content.Intent
+
+import android.view.*
+
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +31,7 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
 
     private lateinit var binding: FragmentReceiptBinding
 
-    private lateinit var myActivityLauncher: ActivityResultLauncher<Intent>
+    private lateinit var addReceiptActivityLauncher: ActivityResultLauncher<Intent>
 
     private val expenseFragment = ReceiptListFragment.newExpenseInstance()
     private val incomeFragment = ReceiptListFragment.newIncomeInstance()
@@ -42,7 +46,8 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
     }
 
     override fun initData() {
-        myActivityLauncher =
+
+        addReceiptActivityLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                 if (activityResult.resultCode == Activity.RESULT_OK) {
                     val result = activityResult.data?.getIntExtra("result", -1)
@@ -79,7 +84,7 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         when (item.itemId) {
             R.id.action_add -> {
                 val intent = Intent(requireContext(), AddReceiptActivity::class.java)
-                myActivityLauncher.launch(intent)
+                addReceiptActivityLauncher.launch(intent)
             }
         }
         return super.onOptionsItemSelected(item)

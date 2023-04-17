@@ -67,7 +67,10 @@ class ReceiptPresenter(baseView: IReceiptView) : BasePresenter<IReceiptView>(bas
             override fun onSuccess(model: HttpResult<List<Bill>>) {
                 if (model.code == 200) {
                     val billList = model.data.reversed()
+                    if (UserData.billList.isNotEmpty()) UserData.billList.clear()
                     UserData.billList.addAll(billList)
+                    if (UserData.expenseBillList.isNotEmpty()) UserData.expenseBillList.clear()
+                    if (UserData.incomeBillList.isNotEmpty())UserData.incomeBillList.clear()
                     for(bill in billList) {
                         if (bill.money > 0) {
                             UserData.expenseBillList.add(bill)

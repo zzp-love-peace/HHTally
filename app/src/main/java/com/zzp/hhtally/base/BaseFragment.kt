@@ -29,8 +29,8 @@ abstract class BaseFragment<V:BaseView, P : BasePresenter<V>>: RxFragment(), Bas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
         initData()
+        initView()
     }
 
     override fun onDestroyView() {

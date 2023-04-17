@@ -1,8 +1,14 @@
 package com.zzp.hhtally.ui.receipt.fragment
 
+
+import android.app.Activity
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.zzp.hhtally.base.BaseFragment
 import com.zzp.hhtally.data.TYPE_EXPENSE
 import com.zzp.hhtally.data.TYPE_INCOME
@@ -14,7 +20,8 @@ class ReceiptListFragment(private val fragmentType: Int) : BaseFragment<IReceipt
     IReceiptListView {
     
     private lateinit var binding: FragmentReceiptListBinding
-    private val billAdapter = BillAdapter()
+    private lateinit var billAdapter : BillAdapter
+    private lateinit var removeReceiptActivityLauncher: ActivityResultLauncher<Intent>
     override fun createPresenter()= ReceiptListPresenter(this)
 
     override fun initViewBinding(inflater: LayoutInflater, container: ViewGroup?): View {
@@ -23,6 +30,12 @@ class ReceiptListFragment(private val fragmentType: Int) : BaseFragment<IReceipt
     }
 
     override fun initData() {
+        removeReceiptActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activityResult ->
+            if(activityResult.resultCode == Activity.RESULT_OK){
+                presenter.getAllBills()
+            }
+        }
+        billAdapter = BillAdapter(requireContext(), removeReceiptActivityLauncher)
         presenter.getAllBills()
     }
 
@@ -34,9 +47,9 @@ class ReceiptListFragment(private val fragmentType: Int) : BaseFragment<IReceipt
         binding.rvBill.visibility = View.VISIBLE
         binding.loadingContainer.root.visibility = View.GONE
         if (fragmentType == TYPE_EXPENSE) {
-            billAdapter.submitList(UserData.expenseBillList)
+            billAdapter.submitList(UserData.expenseBillList.toList())
         } else if (fragmentType == TYPE_INCOME) {
-            billAdapter.submitList(UserData.incomeBillList)
+            billAdapter.submitList(UserData.incomeBillList.toList())
         }
     }
 

@@ -13,11 +13,12 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.trello.rxlifecycle4.components.support.RxFragment
 import com.zzp.hhtally.base.BasePresenter
+
+import com.zzp.hhtally.data.*
+
 import com.zzp.hhtally.data.TYPE_EXPENSE
 import com.zzp.hhtally.data.TYPE_INCOME
-import com.zzp.hhtally.data.TYPE_MONTHLY
-import com.zzp.hhtally.data.TYPE_WEEKLY
-import com.zzp.hhtally.data.TYPE_YEARLY
+
 import com.zzp.hhtally.data.chart.MonthInfo
 import com.zzp.hhtally.data.chart.WeekInfo
 import com.zzp.hhtally.data.chart.YearInfo
