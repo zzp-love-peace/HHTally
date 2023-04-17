@@ -3,7 +3,7 @@ package com.zzp.hhtally.data
 const val TAG = "TAG"
 const val BASE_URL = "http://101.132.158.146:80/"
 
-const val TEXT_IN_BASE_URL = "https://api.textin.com/"
+const val TEXT_IN_BASE_URL = "https://api.textin.com/robot/v1.0/"
 
 const val TOKEN_VALUE = "Authorization"
 
