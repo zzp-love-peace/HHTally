@@ -15,6 +15,9 @@ import com.trello.rxlifecycle4.components.support.RxFragment
 import com.zzp.hhtally.base.BasePresenter
 import com.zzp.hhtally.data.TYPE_EXPENSE
 import com.zzp.hhtally.data.TYPE_INCOME
+import com.zzp.hhtally.data.TYPE_MONTHLY
+import com.zzp.hhtally.data.TYPE_WEEKLY
+import com.zzp.hhtally.data.TYPE_YEARLY
 import com.zzp.hhtally.data.chart.MonthInfo
 import com.zzp.hhtally.data.chart.WeekInfo
 import com.zzp.hhtally.data.chart.YearInfo
@@ -25,10 +28,6 @@ import com.zzp.hhtally.util.execute
 import com.zzp.hhtally.util.logD
 import com.zzp.hhtally.util.showToast
 import java.util.Calendar
-
-const val TYPE_YEARLY = 0
-const val TYPE_MONTHLY = 1
-const val TYPE_WEEKLY = 2
 
 class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView) {
 

@@ -5,7 +5,6 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.PieData
 import com.zzp.hhtally.base.BaseView
 
-interface IChartView: BaseView {
-
+interface IChartView : BaseView {
     fun refreshChartData(pieData: PieData, barData: BarData, lineData: LineData)
 }
