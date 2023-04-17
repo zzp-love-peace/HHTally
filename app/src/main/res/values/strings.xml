@@ -47,5 +47,6 @@
     <string name="title_activity_yearly_report">YearlyReportActivity</string>
     <string name="string_all_time">全部时间</string>
     <string name="string_all_label">所有标签</string>
+    <string name="add_label">添加标签</string>
 
 </resources>

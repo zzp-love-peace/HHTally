@@ -10,8 +10,8 @@ import com.zzp.hhtally.network.HttpResult
 import com.zzp.hhtally.network.RetrofitManager
 import com.zzp.hhtally.util.LabelUtil
 import com.zzp.hhtally.util.execute
-import com.zzp.hhtally.util.logD
 import com.zzp.hhtally.util.showToast
+import kotlin.random.Random
 
 class ReceiptPresenter(baseView: IReceiptView) : BasePresenter<IReceiptView>(baseView) {
 
@@ -39,7 +39,7 @@ class ReceiptPresenter(baseView: IReceiptView) : BasePresenter<IReceiptView>(bas
         RetrofitManager.apiService.addLabel(labelName).execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<Int>>() {
             override fun onSuccess(model: HttpResult<Int>) {
                 if (model.code == 200) {
-                    LabelUtil.labelList.add(Label(model.data, labelName, null))
+                    LabelUtil.labelList.add(Label(-1, model.data, labelName, null))
 
                 } else {
                     model.msg.showToast()

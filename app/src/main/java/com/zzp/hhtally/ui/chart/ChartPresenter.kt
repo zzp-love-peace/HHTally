@@ -86,14 +86,12 @@ class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView)
         val view = getView() ?: return
         val fragment = view as RxFragment
         month = if (month.length == 1) "0$month" else month
-        "$year//$month".logD("month")
         RetrofitManager.apiService.getMonthInfo(year, month)
             .execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<MonthInfo>>() {
                 override fun onSuccess(model: HttpResult<MonthInfo>) {
                     if (model.code == 200) {
                         val data = model.data
-                        model.code.toString().logD("month")
-                        // data.toString().logD("monthExpense")
+                        data.toString().logD("monthExpense")
                         view.refreshChartData(
                             getPieData(data.everyday),
                             getBarData(data.everyday),
@@ -170,8 +168,24 @@ class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView)
     }
 
     private fun getWeekIncome() {
-        // TODO
-        // 调用近一周收入接口
+        val view = getView() ?: return
+        val fragment = view as RxFragment
+        RetrofitManager.apiService.getWeekIncome()
+            .execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<WeekInfo>>() {
+                override fun onSuccess(model: HttpResult<WeekInfo>) {
+                    if (model.code == 200) {
+                        val data = model.data
+                        data.everyday.toString().logD("weekIncome")
+                        view.refreshChartData(
+                            getPieData(data.everyday),
+                            getBarData(data.everyday),
+                            getLineData(data.everyday),
+                        )
+                    } else {
+                        model.msg.showToast()
+                    }
+                }
+            })
     }
 
     private fun getPieData(data: List<Double>): PieData {
@@ -209,7 +223,7 @@ class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView)
     private fun getBarData(data: List<Double>): BarData {
         val visitors = mutableListOf<BarEntry>()
         data.forEachIndexed { index, d ->
-            visitors.add(BarEntry(index.toFloat(), d.absoluteValue.toFloat()))
+            visitors.add(BarEntry((index + 1).toFloat(), d.absoluteValue.toFloat()))
         }
 
         val barDataSet = BarDataSet(visitors, "Visitors").apply {
@@ -224,7 +238,7 @@ class ChartPresenter(baseView: IChartView) : BasePresenter<IChartView>(baseView)
     private fun getLineData(data: List<Double>): LineData {
         val visitors = mutableListOf<Entry>()
         data.forEachIndexed { index, d ->
-            visitors.add(Entry(index.toFloat(), d.absoluteValue.toFloat()))
+            visitors.add(Entry((index + 1).toFloat(), d.absoluteValue.toFloat()))
         }
 
         val lineDataSet = LineDataSet(visitors, "Visitors")
