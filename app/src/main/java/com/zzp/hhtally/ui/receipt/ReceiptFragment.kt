@@ -3,8 +3,6 @@ package com.zzp.hhtally.ui.receipt
 import android.app.Activity
 import android.content.Intent
 
-import android.view.*
-
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater

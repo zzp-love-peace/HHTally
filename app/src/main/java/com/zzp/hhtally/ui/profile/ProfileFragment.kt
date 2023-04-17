@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
+import com.zzp.hhtally.data.TYPE_MONTHLY
+import com.zzp.hhtally.data.TYPE_YEARLY
 import com.zzp.hhtally.databinding.FragmentProfileBinding
 import com.zzp.hhtally.ui.profile.report.ReportActivity
 import com.zzp.hhtally.util.showToast
@@ -49,20 +51,19 @@ class ProfileFragment : BaseFragment<IProfileView, ProfilePresenter>(), IProfile
                 }
 
                 R.id.settings_yearly_report -> {
-                    // todo
-                    "跳转年度报表页".showToast()
-                    val intent = Intent(requireContext(), ReportActivity::class.java)
+                    val intent = Intent(requireActivity(), ReportActivity::class.java)
+                    intent.putExtra("date_type", TYPE_YEARLY)
                     startActivity(intent)
                 }
 
                 R.id.settings_monthly_report -> {
-                    // todo
-                    "跳转月度报表页".showToast()
+                    val intent = Intent(requireActivity(), ReportActivity::class.java)
+                    intent.putExtra("date_type", TYPE_MONTHLY)
+                    startActivity(intent)
                 }
             }
             true
         }
     }
-
 
 }
