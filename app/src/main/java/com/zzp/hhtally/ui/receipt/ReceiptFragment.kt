@@ -24,6 +24,7 @@ import com.zzp.hhtally.databinding.FragmentReceiptBinding
 import com.zzp.hhtally.ui.receipt.adapter.ViewPagerAdapter
 import com.zzp.hhtally.ui.receipt.add.AddReceiptActivity
 import com.zzp.hhtally.ui.receipt.fragment.ReceiptListFragment
+import com.zzp.hhtally.ui.receipt.search.SearchActivity
 import com.zzp.hhtally.util.LabelUtil
 
 
@@ -71,6 +72,7 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         tabTitle.add(resources.getString(R.string.income))
         val viewPagerAdapter = ViewPagerAdapter(requireActivity(), data)
         binding.viewPager2.adapter = viewPagerAdapter
+        binding.viewPager2.offscreenPageLimit = 1
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()
@@ -86,6 +88,10 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
                 val intent = Intent(requireContext(), AddReceiptActivity::class.java)
                 addReceiptActivityLauncher.launch(intent)
             }
+            R.id.action_search -> {
+                val intent = Intent(requireContext(), SearchActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -99,7 +105,6 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
     override fun doRefreshError() {
         expenseFragment.doRefreshError()
         incomeFragment.doRefreshError()
-
 
     }
 }

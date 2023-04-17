@@ -43,6 +43,10 @@
         <activity
             android:name=".ui.receipt.info.ReceiptInfoActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.receipt.search.SearchActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

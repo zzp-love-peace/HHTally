@@ -45,5 +45,7 @@
     <string name="monthly_report">月度报表</string>
     <string name="statistics">统计</string>
     <string name="title_activity_yearly_report">YearlyReportActivity</string>
+    <string name="string_all_time">全部时间</string>
+    <string name="string_all_label">所有标签</string>
 
 </resources>

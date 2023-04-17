@@ -172,8 +172,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
                 .build()
 
         datePicker?.addOnPositiveButtonClickListener {
-            binding.tvTime.text = SimpleDateFormat.getDateInstance().format(it)
-
+            binding.tvTime.text = SimpleDateFormat("yyy/MM/dd", Locale.CHINA).format(it)
         }
     }
 

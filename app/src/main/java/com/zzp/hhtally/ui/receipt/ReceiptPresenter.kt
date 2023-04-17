@@ -87,29 +87,4 @@ class ReceiptPresenter(baseView: IReceiptView) : BasePresenter<IReceiptView>(bas
 
         })
     }
-
-    fun getBillsByLabel(labelId: Int) {
-        val view = getView() ?: return
-        val fragment = view as RxFragment
-        RetrofitManager.apiService.getBillsByLabel(labelId).execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
-            override fun onSuccess(model: HttpResult<List<Bill>>) {
-
-            }
-
-        })
-    }
-
-    fun getBillsByDate(date: String) {
-        val view = getView() ?: return
-        val fragment = view as RxFragment
-        RetrofitManager.apiService.getBillsByDate(date).execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
-            override fun onSuccess(model: HttpResult<List<Bill>>) {
-
-            }
-
-        })
-    }
-
-
-
 }

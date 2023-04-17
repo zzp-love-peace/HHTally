@@ -57,7 +57,7 @@ class ReceiptInfoActivity : BaseActivity<IReceiptInfoView, ReceiptInfoPresenter>
         binding.tvLabel.text = LabelUtil.getLabelNameFormId(bill.labelId)
         binding.tvTime.text = bill.time
         binding.tvShopkeeper.text = bill.shopkeeper
-        binding.tvShopkeeper.text = bill.remark
+        binding.tvRemark.text = bill.remark
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

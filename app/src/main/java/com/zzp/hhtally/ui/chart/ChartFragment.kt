@@ -11,8 +11,7 @@ import com.github.mikephil.charting.data.PieData
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
-import com.zzp.hhtally.data.TYPE_EXPENSE
-import com.zzp.hhtally.data.TYPE_INCOME
+import com.zzp.hhtally.data.*
 import com.zzp.hhtally.databinding.FragmentChartBinding
 import com.zzp.hhtally.util.getColorByAttr
 
