@@ -8,6 +8,7 @@ import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
@@ -70,7 +71,11 @@ class ChartFragment : BaseFragment<IChartView, ChartPresenter>(), IChartView {
             requireContext().getColorByAttr(com.google.android.material.R.attr.colorOnSurface)
         binding.containerChart.apply {
             pieChart.apply {
-                data = pieData
+                pieData.setValueFormatter(PercentFormatter(this))
+                data = pieData.apply {
+                    setValueTextSize(10f)
+                    setValueTextColor(colorOnSurface)
+                }
                 legend.isEnabled = false
                 description.isEnabled = false
                 animateY(800, Easing.EaseInOutQuad)

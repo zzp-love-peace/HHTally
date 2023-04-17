@@ -10,7 +10,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.utils.MPPointF
 import com.trello.rxlifecycle4.components.support.RxFragment
 import com.zzp.hhtally.base.BasePresenter
 import com.zzp.hhtally.data.TYPE_EXPENSE
@@ -21,6 +21,7 @@ import com.zzp.hhtally.data.TYPE_YEARLY
 import com.zzp.hhtally.data.chart.MonthInfo
 import com.zzp.hhtally.data.chart.WeekInfo
 import com.zzp.hhtally.data.chart.YearInfo
+import com.zzp.hhtally.data.chartColor
 import com.zzp.hhtally.network.HttpCallback
 import com.zzp.hhtally.network.HttpResult
 import com.zzp.hhtally.network.RetrofitManager
@@ -195,18 +196,25 @@ class ReportChartPresenter(baseView: IReportChartView) :
             if (!d.equals(0.0)) {
                 when (dateType) {
                     TYPE_MONTHLY ->
-                        visitors.add(PieEntry(d.absoluteValue.toFloat(), "${index}日"))
+                        visitors.add(PieEntry(d.absoluteValue.toFloat(), "${index + 1}日"))
 
                     TYPE_YEARLY ->
-                        visitors.add(PieEntry(d.absoluteValue.toFloat(), "${index}月"))
+                        visitors.add(PieEntry(d.absoluteValue.toFloat(), "${index + 1}月"))
                 }
             }
         }
 
         val pieDataSet = PieDataSet(visitors, "Visitors").apply {
-            colors = ColorTemplate.MATERIAL_COLORS.toList()
+            colors = chartColor
             valueTextColor = Color.BLACK
             valueTextSize = 16f
+
+            setDrawIcons(false)
+            sliceSpace = 3f
+            iconsOffset = MPPointF(0f, 40f)
+            selectionShift = 5f
+            xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+            yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         }
 
         return PieData(pieDataSet)
@@ -219,9 +227,8 @@ class ReportChartPresenter(baseView: IReportChartView) :
         }
 
         val barDataSet = BarDataSet(visitors, "Visitors").apply {
-            colors = ColorTemplate.MATERIAL_COLORS.toList()
+            colors = chartColor
             valueTextColor = Color.BLACK
-            // valueTextSize = 16f
         }
 
         return BarData(barDataSet)
@@ -233,7 +240,10 @@ class ReportChartPresenter(baseView: IReportChartView) :
             visitors.add(Entry((index + 1).toFloat(), d.absoluteValue.toFloat()))
         }
 
-        val lineDataSet = LineDataSet(visitors, "Visitors")
+        val lineDataSet = LineDataSet(visitors, "Visitors").apply {
+            colors = chartColor
+            valueTextColor = Color.BLACK
+        }
         return LineData(lineDataSet)
     }
 }

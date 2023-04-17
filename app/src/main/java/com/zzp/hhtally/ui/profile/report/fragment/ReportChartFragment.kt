@@ -8,6 +8,7 @@ import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.zzp.hhtally.base.BaseFragment
 import com.zzp.hhtally.databinding.FragmentReportBinding
 import com.zzp.hhtally.util.getColorByAttr
@@ -39,7 +40,11 @@ class ReportChartFragment(private val billType: Int, private val dateType: Int) 
             requireContext().getColorByAttr(com.google.android.material.R.attr.colorOnSurface)
         binding.apply {
             pieChart.apply {
-                data = pieData
+                pieData.setValueFormatter(PercentFormatter(this))
+                data = pieData.apply {
+                    setValueTextSize(10f)
+                    setValueTextColor(colorOnSurface)
+                }
                 legend.isEnabled = false
                 description.isEnabled = false
                 animateY(800, Easing.EaseInOutQuad)
