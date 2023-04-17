@@ -12,7 +12,8 @@ fun uri2RequestBody(uri: Uri): RequestBody =
     RequestBody.create(MediaType.parse("image/jpeg"), uri.toFile())
 
 fun byteArray2RequestBody(bytes: ByteArray): RequestBody =
-    RequestBody.create(MediaType.parse("image/jpeg"), bytes)
+    RequestBody.create(MediaType.parse("application/octet-stream"), bytes)
+//    RequestBody.create(MediaType.parse("image/jpeg"), bytes)
 
 fun bitmap2ByteArray(bitmap: Bitmap): ByteArray {
     val byteArrayOutPutStream = ByteArrayOutputStream()
@@ -20,6 +21,8 @@ fun bitmap2ByteArray(bitmap: Bitmap): ByteArray {
     byteArrayOutPutStream.close()
     return byteArrayOutPutStream.toByteArray()
 }
+
+fun bitmap2RequestBody(bitmap: Bitmap) = byteArray2RequestBody(bitmap2ByteArray(bitmap))
 
 fun bitmap2Base64(image: Bitmap): String {
     val byteArrayOutputStream = ByteArrayOutputStream()

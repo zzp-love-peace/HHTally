@@ -43,6 +43,7 @@ data class BillsCropData(
         val type: String,//行程单、商户小票、火车票等票据类型
         val type_description: String,
         val kind: String,//交通、办公、日用等票据大类
+        val kind_description: String,
     ) {
         data class Item(
             val description: String,

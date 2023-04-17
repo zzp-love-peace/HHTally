@@ -20,6 +20,6 @@ interface TextInService {
     fun textRecognize(@Body imgBody: RequestBody): Observable<TextInResult<RecognizeData>>
 
     //通用票据识别
-    @POST("/robot/v1.0/api/bills_crop")
+    @POST("/api/bills_crop")
     fun billsCrop(@Body imgBody: RequestBody): Observable<TextInResult<BillsCropData>>
 }

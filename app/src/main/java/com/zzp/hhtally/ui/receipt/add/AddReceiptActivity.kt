@@ -3,6 +3,8 @@ package com.zzp.hhtally.ui.receipt.add
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -59,13 +61,13 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
     override fun initData() {
         takePhotoLauncher = registerForActivityResult(TakePhotoContract()) {
             if (it != null) {
-                presenter.analyzeImage(it)
+                presenter.analyzeImage(getBitmapFromUri(it))
             }
         }
 
         selectPhotoLauncher = registerForActivityResult(SelectPhotoContract()) {
             if (it != null) {
-                presenter.analyzeImage(it)
+                presenter.analyzeImage(getBitmapFromUri(it))
             }
         }
 
@@ -83,7 +85,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
         binding.layoutExpend.isSelected = true
         EditTextUtils.afterDotTwo(binding.etMoney)
         binding.tvLabel.text = LabelUtil.labelList[0].labelName
-        binding.tvTime.text = SimpleDateFormat("yyy/MM/dd", Locale.CHINA).format(Date())
+        binding.tvTime.text = SimpleDateFormat("yyy-MM-dd", Locale.CHINA).format(Date())
 
         initDatePicker()
         initLabelPicker(LabelUtil.labelList)
@@ -172,7 +174,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
                 .build()
 
         datePicker?.addOnPositiveButtonClickListener {
-            binding.tvTime.text = SimpleDateFormat("yyy/MM/dd", Locale.CHINA).format(it)
+            binding.tvTime.text = SimpleDateFormat("yyy-MM-dd", Locale.CHINA).format(it)
         }
     }
 
@@ -194,6 +196,12 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
         intent.putExtra("result", 0)
         setResult(Activity.RESULT_OK, intent)
         finish()
+    }
+
+    override fun refreshFromImg(price: String, time: String, type: String, shopkeeper: String) {
+        binding.tvTime.text = time.split(" ")[0]
+        binding.etMoney.setText(price)
+        binding.etShopkeeper.setText(shopkeeper)
     }
 
     class ModalBottomSheet(
@@ -226,4 +234,9 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
             }
         }
     }
+
+    private fun getBitmapFromUri(uri: Uri) = contentResolver
+        .openFileDescriptor(uri, "r")?.use {
+            BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
+        }
 }
