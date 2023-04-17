@@ -60,19 +60,24 @@ class LabelActivity : BaseActivity<ILabelView, LabelPresenter>(), ILabelView {
 
     override fun initView() {
         binding.apply {
+            toolbar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.add_label ->
+                        addDialog.show()
+
+                    else -> {}
+                }
+                true
+            }
             toolbar.setNavigationOnClickListener {
                 finish()
             }
-            val flexboxLayoutManager = FlexboxLayoutManager(this@LabelActivity).apply {
-                justifyContent = JustifyContent.SPACE_AROUND
-            }
-            rvLabel.apply {
-                layoutManager = flexboxLayoutManager
-                adapter = labelAdapter
-            }
 
-            addLabel.setOnClickListener {
-                addDialog.show()
+            rvLabel.apply {
+                layoutManager = FlexboxLayoutManager(this@LabelActivity).apply {
+                    justifyContent = JustifyContent.SPACE_AROUND
+                }
+                adapter = labelAdapter
             }
         }
     }
