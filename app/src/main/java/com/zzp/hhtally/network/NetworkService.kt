@@ -67,4 +67,10 @@ interface NetworkService {
     @GET("chart/getYearIncome")
     fun getYearIncome(@Query("year") year: String): Observable<HttpResult<YearInfo>>
 
+    @GET("chart/getMonthIncome")
+    fun getMonthIncome(
+        @Query("year") year: String,
+        @Query("month") month: String
+    ): Observable<HttpResult<MonthInfo>>
+
 }

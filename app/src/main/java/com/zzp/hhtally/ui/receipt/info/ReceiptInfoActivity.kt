@@ -1,20 +1,15 @@
 package com.zzp.hhtally.ui.receipt.info
 
-import android.content.Intent
 import android.os.Build
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.annotation.RequiresApi
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseActivity
 import com.zzp.hhtally.data.Bill
 import com.zzp.hhtally.data.TYPE_EXPENSE
 import com.zzp.hhtally.databinding.ActivityReceiptInfoBinding
-import com.zzp.hhtally.ui.receipt.add.AddReceiptActivity
 import com.zzp.hhtally.util.LabelUtil
-import com.zzp.hhtally.util.logD
 import kotlin.math.abs
 
 
@@ -57,7 +52,7 @@ class ReceiptInfoActivity : BaseActivity<IReceiptInfoView, ReceiptInfoPresenter>
         binding.tvLabel.text = LabelUtil.getLabelNameFormId(bill.labelId)
         binding.tvTime.text = bill.time
         binding.tvShopkeeper.text = bill.shopkeeper
-        binding.tvShopkeeper.text = bill.remark
+        binding.tvRemark.text = bill.remark
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -70,8 +65,10 @@ class ReceiptInfoActivity : BaseActivity<IReceiptInfoView, ReceiptInfoPresenter>
             android.R.id.home -> {
                 finish()
             }
+
             R.id.action_delete -> {
-                MaterialAlertDialogBuilder(this).setTitle("提示").setMessage("您确定要删除该账单吗？")
+                MaterialAlertDialogBuilder(this).setTitle("提示")
+                    .setMessage("您确定要删除该账单吗？")
                     .setNeutralButton("取消") { dialog, which ->
                     }.setPositiveButton("确定") { dialog, which ->
                         presenter.removeBill(bill.billId)

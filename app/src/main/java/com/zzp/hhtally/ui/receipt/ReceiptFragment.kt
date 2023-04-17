@@ -3,8 +3,6 @@ package com.zzp.hhtally.ui.receipt
 import android.app.Activity
 import android.content.Intent
 
-import android.view.*
-
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -71,6 +69,7 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         tabTitle.add(resources.getString(R.string.income))
         val viewPagerAdapter = ViewPagerAdapter(requireActivity(), data)
         binding.viewPager2.adapter = viewPagerAdapter
+        binding.viewPager2.offscreenPageLimit = 1
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()

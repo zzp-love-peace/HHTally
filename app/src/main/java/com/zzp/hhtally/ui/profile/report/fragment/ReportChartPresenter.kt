@@ -28,6 +28,7 @@ import com.zzp.hhtally.util.execute
 import com.zzp.hhtally.util.logD
 import com.zzp.hhtally.util.showToast
 import java.util.Calendar
+import kotlin.math.absoluteValue
 
 class ReportChartPresenter(baseView: IReportChartView) :
     BasePresenter<IReportChartView>(baseView) {
@@ -148,8 +149,24 @@ class ReportChartPresenter(baseView: IReportChartView) :
     }
 
     private fun getMonthIncome() {
-        // TODO
-        // 调用月收入接口
+        val view = getView() ?: return
+        val fragment = view as RxFragment
+        RetrofitManager.apiService.getMonthIncome(year, month)
+            .execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<MonthInfo>>() {
+                override fun onSuccess(model: HttpResult<MonthInfo>) {
+                    if (model.code == 200) {
+                        val data = model.data
+                        data.toString().logD("MonthIncome")
+                        view.refreshChartData(
+                            getPieData(data.everyday),
+                            getBarData(data.everyday),
+                            getLineData(data.everyday),
+                        )
+                    } else {
+                        model.msg.showToast()
+                    }
+                }
+            })
     }
 
     private fun getWeekIncome() {
@@ -164,10 +181,10 @@ class ReportChartPresenter(baseView: IReportChartView) :
             if (!d.equals(0.0)) {
                 when (dateType) {
                     TYPE_MONTHLY ->
-                        visitors.add(PieEntry(d.toFloat(), "${index}日"))
+                        visitors.add(PieEntry(d.absoluteValue.toFloat(), "${index}日"))
 
                     TYPE_YEARLY ->
-                        visitors.add(PieEntry(d.toFloat(), "${index}月"))
+                        visitors.add(PieEntry(d.absoluteValue.toFloat(), "${index}月"))
                 }
             }
         }
@@ -184,7 +201,7 @@ class ReportChartPresenter(baseView: IReportChartView) :
     private fun getBarData(data: List<Double>): BarData {
         val visitors = mutableListOf<BarEntry>()
         data.forEachIndexed { index, d ->
-            visitors.add(BarEntry(index.toFloat(), d.toFloat()))
+            visitors.add(BarEntry(index.toFloat(), d.absoluteValue.toFloat()))
         }
 
         val barDataSet = BarDataSet(visitors, "Visitors").apply {
@@ -199,7 +216,7 @@ class ReportChartPresenter(baseView: IReportChartView) :
     private fun getLineData(data: List<Double>): LineData {
         val visitors = mutableListOf<Entry>()
         data.forEachIndexed { index, d ->
-            visitors.add(Entry(index.toFloat(), d.toFloat()))
+            visitors.add(Entry(index.toFloat(), d.absoluteValue.toFloat()))
         }
 
         val lineDataSet = LineDataSet(visitors, "Visitors")
