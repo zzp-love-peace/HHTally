@@ -53,7 +53,7 @@ class LabelPresenter(baseView: ILabelView) : BasePresenter<ILabelView>(baseView)
         val view = getView() ?: return
         val activity = view as RxAppCompatActivity
         if (label.userId == 0) {
-            "无法删除该用户的标签".showToast()
+            "无法删除默认标签".showToast()
         } else {
             RetrofitManager.apiService.removeLabel(label.labelId)
                 .execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<Any?>>() {
