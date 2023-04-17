@@ -33,33 +33,6 @@ class ReceiptPresenter(baseView: IReceiptView) : BasePresenter<IReceiptView>(bas
             })
     }
 
-    fun addLabel(labelName: String) {
-        val view = getView() ?: return
-        val fragment = view as RxFragment
-        RetrofitManager.apiService.addLabel(labelName).execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<Int>>() {
-            override fun onSuccess(model: HttpResult<Int>) {
-                if (model.code == 200) {
-                    LabelUtil.labelList.add(Label(-1, model.data, labelName, null))
-
-                } else {
-                    model.msg.showToast()
-                }
-            }
-
-        })
-    }
-
-    fun removeLabel(labelId: Int) {
-        val view = getView() ?: return
-        val fragment = view as RxFragment
-        RetrofitManager.apiService.removeLabel(labelId).execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<Any?>>() {
-            override fun onSuccess(model: HttpResult<Any?>) {
-
-            }
-
-        })
-    }
-
     fun getAllBills() {
         val view = getView() ?: return
         val fragment = view as RxFragment

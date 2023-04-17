@@ -8,11 +8,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import com.github.gzuliyujiang.wheelpicker.OptionPicker
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zzp.exchangesystem.contracts.SelectPhotoContract
 import com.zzp.exchangesystem.contracts.TakePhotoContract
 import com.zzp.hhtally.R
@@ -43,13 +46,13 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
 
     private val modalBottomSheet by lazy {
         ModalBottomSheet(
-            takePhotoLauncher,
-            selectPhotoLauncher
+            takePhotoLauncher, selectPhotoLauncher
         )
     }
 
     private lateinit var permission: ActivityResultLauncher<String>
 
+    private lateinit var loadingDialog: AlertDialog
 
     override fun createPresenter() = AddReceiptPresenter(this)
 
@@ -90,12 +93,11 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
         initDatePicker()
         initLabelPicker(LabelUtil.labelList)
 
-        val permission =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-                if (it) {
-                    modalBottomSheet.show(supportFragmentManager, TAG)
-                }
+        val permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                modalBottomSheet.show(supportFragmentManager, TAG)
             }
+        }
 
         binding.layoutExpend.setOnClickListener {
             binding.layoutExpend.isSelected = true
@@ -136,30 +138,29 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
                     "金额不能为0".showToast()
                 } else {
                     var money = moneyStr.toDouble()
-                    val labelId = LabelUtil.getLabelIdFromName(binding.tvLabel.text.toString())
-                    val time = binding.tvTime.text.toString()
-                    val remark = binding.etRemark.text.toString()
-                    val shopkeeper = binding.etShopkeeper.text.toString()
-                    val payType = binding.layoutExpend.isSelected
-                    if (!payType) money = -money
-                    if (money == 0.0) {
-                        "金额不能为0".showToast()
-                    } else {
-                        if (shopkeeper.trim().isEmpty()) {
-                            "商家不能为空".showToast()
+                    val label = binding.tvLabel.text.toString()
+                    if (label.trim().isNotEmpty()) {
+                        val labelId = LabelUtil.getLabelIdFromName(label)
+                        val time = binding.tvTime.text.toString()
+                        val remark = binding.etRemark.text.toString()
+                        val shopkeeper = binding.etShopkeeper.text.toString()
+                        val payType = binding.layoutExpend.isSelected
+                        if (!payType) money = -money
+                        if (money == 0.0) {
+                            "金额不能为0".showToast()
                         } else {
-                            presenter.addBill(
-                                Bill(
-                                    -1,
-                                    labelId,
-                                    -1,
-                                    money,
-                                    remark,
-                                    time,
-                                    shopkeeper
+                            if (shopkeeper.trim().isEmpty()) {
+                                "商家不能为空".showToast()
+                            } else {
+                                presenter.addBill(
+                                    Bill(
+                                        -1, labelId, -1, money, remark, time, shopkeeper
+                                    )
                                 )
-                            )
+                            }
                         }
+                    } else {
+                        "标签不能为空".showToast()
                     }
                 }
             }
@@ -168,10 +169,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
     }
 
     private fun initDatePicker() {
-        datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText("选择时间")
-                .build()
+        datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("选择时间").build()
 
         datePicker?.addOnPositiveButtonClickListener {
             binding.tvTime.text = SimpleDateFormat("yyy-MM-dd", Locale.CHINA).format(it)
@@ -199,9 +197,26 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
     }
 
     override fun refreshFromImg(price: String, time: String, type: String, shopkeeper: String) {
-        binding.tvTime.text = time.split(" ")[0]
-        binding.etMoney.setText(price)
-        binding.etShopkeeper.setText(shopkeeper)
+        if (price.isNotEmpty()) binding.etMoney.setText(price)
+        if (time.isNotEmpty()) binding.tvTime.text = time.split(" ")[0]
+        if (shopkeeper.isNotEmpty()) binding.etShopkeeper.setText(shopkeeper)
+        if (type.isNotEmpty()) binding.tvLabel.text = type
+    }
+
+    override fun showLoadingDialog() {
+        loadingDialog =
+            MaterialAlertDialogBuilder(this).setView(ProgressBar(this)).setCancelable(false)
+                .show()
+    }
+
+    override fun dismissLoadingDialog() {
+        loadingDialog.dismiss()
+    }
+
+    override fun refreshLabelPicker(labelList: List<Label>) {
+        labelPicker?.setData(labelList.map {
+            it.labelName
+        })
     }
 
     class ModalBottomSheet(
@@ -211,9 +226,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
 
         private lateinit var binding: BottomSheetContentBinding
         override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
         ): View {
             binding = BottomSheetContentBinding.inflate(inflater, container, false)
             return binding.root
@@ -235,8 +248,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
         }
     }
 
-    private fun getBitmapFromUri(uri: Uri) = contentResolver
-        .openFileDescriptor(uri, "r")?.use {
-            BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
-        }
+    private fun getBitmapFromUri(uri: Uri) = contentResolver.openFileDescriptor(uri, "r")?.use {
+        BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
+    }
 }

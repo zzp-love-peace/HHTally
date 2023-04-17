@@ -24,4 +24,13 @@ object LabelUtil {
 
         throw Exception("标签名不存在")
     }
+
+    fun isContainLabelName(labelName: String) : Boolean{
+        for( label in labelList) {
+            if (label.labelName == labelName) {
+                return true
+            }
+        }
+        return false
+    }
 }
