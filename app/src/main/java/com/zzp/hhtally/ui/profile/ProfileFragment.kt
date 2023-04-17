@@ -11,8 +11,8 @@ import com.zzp.hhtally.base.BaseFragment
 import com.zzp.hhtally.data.TYPE_MONTHLY
 import com.zzp.hhtally.data.TYPE_YEARLY
 import com.zzp.hhtally.databinding.FragmentProfileBinding
+import com.zzp.hhtally.ui.profile.label.LabelActivity
 import com.zzp.hhtally.ui.profile.report.ReportActivity
-import com.zzp.hhtally.util.showToast
 
 class ProfileFragment : BaseFragment<IProfileView, ProfilePresenter>(), IProfileView {
     private lateinit var binding: FragmentProfileBinding
@@ -46,8 +46,8 @@ class ProfileFragment : BaseFragment<IProfileView, ProfilePresenter>(), IProfile
         binding.navSettings.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.settings_label -> {
-                    // todo
-                    "跳转label页".showToast()
+                    val intent = Intent(requireActivity(), LabelActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.settings_yearly_report -> {

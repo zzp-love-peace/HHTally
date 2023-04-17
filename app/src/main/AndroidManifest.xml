@@ -20,6 +20,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.profile.label.LabelActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.report.ReportActivity"
             android:exported="false"
             android:label="@string/title_activity_yearly_report"
@@ -39,7 +42,6 @@
         <activity
             android:name=".ui.receipt.add.AddReceiptActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.receipt.info.ReceiptInfoActivity"
             android:exported="false" />
