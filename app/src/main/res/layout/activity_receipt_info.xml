@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:menu="@menu/info_receipt_toolbar_menu"
-        app:title="支出详情"
+        app:title="账单详情"
         app:titleCentered="true" />
 
     <LinearLayout
@@ -31,13 +31,18 @@
             android:textColor="@color/md_theme_light_primary"
             android:textSize="55sp" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_money"
+        <EditText
+            android:id="@+id/et_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:background="@null"
+            android:cursorVisible="false"
+            android:hint="@string/string_money_zero"
+            android:inputType="numberDecimal|number"
             android:textColor="@color/md_theme_light_primary"
-            android:textSize="60sp"
-            tools:text="250.00"/>
+            android:textColorHint="@color/md_theme_light_primary"
+            android:textSize="60sp" />
 
 
     </LinearLayout>
@@ -48,6 +53,71 @@
         android:layout_marginStart="30dp"
         android:layout_marginBottom="10dp"
         android:background="@color/md_theme_light_surfaceTint" />
+
+    <LinearLayout
+        android:id="@+id/layout_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_pay_type" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_type"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/layout_expense"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_pay_type_selector"
+            android:gravity="center"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expense"
+                android:textColor="@drawable/bg_pay_type_tv_selector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_income"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pay_type_selector"
+            android:gravity="center"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/income"
+                android:textColor="@drawable/bg_pay_type_tv_selector" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/md_theme_light_secondary" />
 
     <LinearLayout
         android:id="@+id/layout_label"
@@ -130,8 +200,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -147,12 +215,17 @@
             android:text="@string/string_shopkeeper"
             android:textSize="16sp" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_shopkeeper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/et_shopkeeper"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_marginStart="25dp"
-             />
+            android:autofillHints=""
+            android:background="@null"
+            android:hint="@string/string_click_to_input"
+            android:inputType="text"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
     </LinearLayout>
 
     <View
@@ -184,17 +257,41 @@
             android:text="@string/string_remark"
             android:textSize="16sp" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_remark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/et_remark"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:background="@null"
             android:gravity="start"
+            android:hint="@string/string_remark_hint"
+            android:inputType="textMultiLine"
             android:maxLines="5"
             android:paddingTop="10dp"
             android:paddingBottom="10dp" />
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_update"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:layout_gravity="center"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
 
 </LinearLayout>

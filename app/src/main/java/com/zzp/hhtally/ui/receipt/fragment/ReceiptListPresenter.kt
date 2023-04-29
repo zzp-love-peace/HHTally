@@ -13,26 +13,43 @@ import com.zzp.hhtally.util.showToast
 
 
 class ReceiptListPresenter(baseView: IReceiptListView) : BasePresenter<IReceiptListView>(baseView) {
-    fun getAllBills() {
+//    fun getAllBills() {
+//        val view = getView() ?: return
+//        val fragment = view as RxFragment
+//        RetrofitManager.apiService.getAllBills().execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
+//            override fun onSuccess(model: HttpResult<List<Bill>>) {
+//                if (model.code == 200) {
+//                    val billList = model.data.reversed()
+//                    if (UserData.billList.isNotEmpty()) UserData.billList.clear()
+//                    UserData.billList.addAll(billList)
+//                    if (UserData.expenseBillList.isNotEmpty()) UserData.expenseBillList.clear()
+//                    if (UserData.incomeBillList.isNotEmpty())UserData.incomeBillList.clear()
+//                    for(bill in billList) {
+//                        if (bill.money > 0) {
+//                            UserData.expenseBillList.add(bill)
+//                        } else {
+//                            UserData.incomeBillList.add(bill)
+//                        }
+//                    }
+//                    Log.d("TAG", "onSuccess: " + UserData.expenseBillList)
+//                    view.doRefreshSuccess()
+//                } else {
+//                    view.doRefreshError()
+//                    model.msg.showToast()
+//                }
+//            }
+//
+//        })
+//    }
+
+    fun getAllBills(pageNum: Int, type: Int) {
         val view = getView() ?: return
         val fragment = view as RxFragment
-        RetrofitManager.apiService.getAllBills().execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
+        RetrofitManager.apiService.getAllBills(pageNum, type).execute(fragment.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
             override fun onSuccess(model: HttpResult<List<Bill>>) {
                 if (model.code == 200) {
-                    val billList = model.data.reversed()
-                    if (UserData.billList.isNotEmpty()) UserData.billList.clear()
-                    UserData.billList.addAll(billList)
-                    if (UserData.expenseBillList.isNotEmpty()) UserData.expenseBillList.clear()
-                    if (UserData.incomeBillList.isNotEmpty())UserData.incomeBillList.clear()
-                    for(bill in billList) {
-                        if (bill.money > 0) {
-                            UserData.expenseBillList.add(bill)
-                        } else {
-                            UserData.incomeBillList.add(bill)
-                        }
-                    }
-                    Log.d("TAG", "onSuccess: " + UserData.expenseBillList)
-                    view.doRefreshSuccess()
+                    val billList = model.data
+                    view.doRefreshSuccess(billList, pageNum == 1)
                 } else {
                     view.doRefreshError()
                     model.msg.showToast()

@@ -26,7 +26,7 @@ object RetrofitManager {
 
     private fun createOkHttpClient(): OkHttpClient {
         val okBuilder =
-            OkHttpClient.Builder().connectTimeout(5L, TimeUnit.SECONDS).addInterceptor {
+            OkHttpClient.Builder().connectTimeout(8L, TimeUnit.SECONDS).addInterceptor {
                 val original = it.request()
                 val request =
                     original.newBuilder()

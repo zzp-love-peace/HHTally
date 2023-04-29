@@ -18,6 +18,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseFragment
 import com.zzp.hhtally.data.Bill
+import com.zzp.hhtally.data.TYPE_EXPENSE
+import com.zzp.hhtally.data.TYPE_INCOME
 import com.zzp.hhtally.databinding.FragmentReceiptBinding
 import com.zzp.hhtally.ui.receipt.adapter.ViewPagerAdapter
 import com.zzp.hhtally.ui.receipt.add.AddReceiptActivity
@@ -51,7 +53,10 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
                 if (activityResult.resultCode == Activity.RESULT_OK) {
                     val result = activityResult.data?.getIntExtra("result", -1)
                     if (result == 0) {
-                        presenter.getAllBills()
+                        val type = activityResult.data?.getIntExtra("type", -1) ?: -1
+                        if (type != -1) {
+                            presenter.getAllBills(type)
+                        }
                     }
                 }
             }
@@ -94,16 +99,18 @@ class ReceiptFragment : BaseFragment<IReceiptView, ReceiptPresenter>(), IReceipt
         return super.onOptionsItemSelected(item)
     }
 
-    override fun doRefreshSuccess(expenseBillList: List<Bill>, incomeBillList: List<Bill>) {
-        expenseFragment.doRefreshSuccess()
-        incomeFragment.doRefreshSuccess()
+    override fun doRefreshSuccess(billList: List<Bill>, type: Int) {
+        if (type == TYPE_INCOME) {
+            incomeFragment.doRefreshSuccess(billList, true)
+        } else if (type == TYPE_EXPENSE) {
+            expenseFragment.doRefreshSuccess(billList, true)
+        }
 
     }
 
     override fun doRefreshError() {
         expenseFragment.doRefreshError()
         incomeFragment.doRefreshError()
-
     }
 }
 

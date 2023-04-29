@@ -4,7 +4,7 @@ import com.zzp.hhtally.base.BaseView
 import com.zzp.hhtally.data.Bill
 
 interface IReceiptView : BaseView {
-    fun doRefreshSuccess(expenseBillList: List<Bill>, incomeBillList: List<Bill>)
+    fun doRefreshSuccess(billList: List<Bill>, type: Int)
 
     fun doRefreshError()
 

@@ -13,7 +13,7 @@ object BillDiffCalculator {
             { oldItem: Any, newItem: Any ->
                 when {
                     oldItem is User && newItem is User -> oldItem.userId == newItem.userId
-                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
+                    oldItem is Bill && newItem is Bill -> oldItem == newItem
                     oldItem is Label && newItem is Label -> oldItem.labelId == newItem.labelId
                     else -> oldItem.javaClass == newItem.javaClass
                 }
@@ -21,7 +21,7 @@ object BillDiffCalculator {
             { oldItem: Any, newItem: Any ->
                 when {
                     oldItem is User && newItem is User -> oldItem.userId == newItem.userId
-                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
+                    oldItem is Bill && newItem is Bill -> oldItem == newItem
                     oldItem is Label && newItem is Label -> oldItem.labelId == newItem.labelId
                     else -> oldItem.javaClass == newItem.javaClass && oldItem == newItem
                 }
@@ -33,7 +33,7 @@ object BillDiffCalculator {
             areItemSame = { oldItem: T, newItem: T ->
                 when {
                     oldItem is User && newItem is User -> oldItem.userId == newItem.userId
-                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
+                    oldItem is Bill && newItem is Bill -> oldItem == newItem
                     oldItem is Label && newItem is Label -> oldItem.labelId == newItem.labelId
                     else -> oldItem.javaClass == newItem.javaClass
                 }
@@ -41,7 +41,7 @@ object BillDiffCalculator {
             areContentSame = { oldItem: T, newItem: T ->
                 when {
                     oldItem is User && newItem is User -> oldItem.userId == newItem.userId
-                    oldItem is Bill && newItem is Bill -> oldItem.billId == newItem.billId
+                    oldItem is Bill && newItem is Bill -> oldItem == newItem
                     oldItem is Label && newItem is Label -> oldItem.labelId == newItem.labelId
                     else -> oldItem.javaClass == newItem.javaClass && oldItem == newItem
                 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.zzp.hhtally.R
 import com.zzp.hhtally.base.diffutil.BillDiffCalculator
 import com.zzp.hhtally.data.Bill
 import com.zzp.hhtally.data.TYPE_EXPENSE
@@ -25,6 +26,7 @@ class BillAdapter(private val context :Context, private val launcher: ActivityRe
         val billMoney = binding.tvBillMoney
         val billTime = binding.tvBillTime
         val billShoKeeper = binding.tvBillShopkeeper
+        val billImage = binding.imageBill
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,5 +49,6 @@ class BillAdapter(private val context :Context, private val launcher: ActivityRe
         holder.billMoney.text = abs(bill.money).toString()
         holder.billTime.text = bill.time.split(" ")[0]
         holder.billShoKeeper.text = bill.shopkeeper
+        holder.billImage.setImageResource(if (bill.money > 0) R.drawable.ic_expense else R.drawable.ic_income)
     }
 }

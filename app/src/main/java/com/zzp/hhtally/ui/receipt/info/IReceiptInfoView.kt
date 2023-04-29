@@ -6,4 +6,6 @@ import com.zzp.hhtally.data.Bill
 interface IReceiptInfoView : BaseView {
 
     fun doRemoveSuccess()
+
+    fun doUpdateSuccess()
 }

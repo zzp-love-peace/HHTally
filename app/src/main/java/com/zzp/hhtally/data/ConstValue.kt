@@ -3,7 +3,10 @@ package com.zzp.hhtally.data
 import com.github.mikephil.charting.utils.ColorTemplate.rgb
 
 const val TAG = "TAG"
-const val BASE_URL = "http://101.132.158.146:80/"
+//const val BASE_URL = "http://101.132.158.146:80/"
+
+//const val BASE_URL = "http://192.168.43.216:9988/"
+const val BASE_URL = "http://121.4.36.29:7372/"
 
 const val TEXT_IN_BASE_URL = "https://api.textin.com/robot/v1.0/"
 

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
@@ -20,15 +19,11 @@ import com.zzp.exchangesystem.contracts.SelectPhotoContract
 import com.zzp.exchangesystem.contracts.TakePhotoContract
 import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseActivity
-import com.zzp.hhtally.data.Bill
-import com.zzp.hhtally.data.Label
-import com.zzp.hhtally.data.TAG
-import com.zzp.hhtally.data.UserData
+import com.zzp.hhtally.data.*
 import com.zzp.hhtally.databinding.ActivityAddReceiptBinding
 import com.zzp.hhtally.databinding.BottomSheetContentBinding
 import com.zzp.hhtally.util.EditTextUtils
 import com.zzp.hhtally.util.LabelUtil
-import com.zzp.hhtally.util.logD
 import com.zzp.hhtally.util.showToast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -85,7 +80,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.layoutExpend.isSelected = true
+        binding.layoutExpense.isSelected = true
         EditTextUtils.afterDotTwo(binding.etMoney)
         binding.tvLabel.text = LabelUtil.labelList[0].labelName
         binding.tvTime.text = SimpleDateFormat("yyy-MM-dd", Locale.CHINA).format(Date())
@@ -99,14 +94,14 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
             }
         }
 
-        binding.layoutExpend.setOnClickListener {
-            binding.layoutExpend.isSelected = true
+        binding.layoutExpense.setOnClickListener {
+            binding.layoutExpense.isSelected = true
             binding.layoutIncome.isSelected = false
         }
 
         binding.layoutIncome.setOnClickListener {
             binding.layoutIncome.isSelected = true
-            binding.layoutExpend.isSelected = false
+            binding.layoutExpense.isSelected = false
         }
 
         binding.layoutPhoto.setOnClickListener {
@@ -144,7 +139,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
                         val time = binding.tvTime.text.toString()
                         val remark = binding.etRemark.text.toString()
                         val shopkeeper = binding.etShopkeeper.text.toString()
-                        val payType = binding.layoutExpend.isSelected
+                        val payType = binding.layoutExpense.isSelected
                         if (!payType) money = -money
                         if (money == 0.0) {
                             "金额不能为0".showToast()
@@ -192,6 +187,7 @@ class AddReceiptActivity : BaseActivity<IAddReceiptView, AddReceiptPresenter>(),
     override fun doAddSuccess() {
         val intent = Intent()
         intent.putExtra("result", 0)
+        intent.putExtra("type", if (binding.layoutExpense.isSelected) TYPE_EXPENSE else TYPE_INCOME)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

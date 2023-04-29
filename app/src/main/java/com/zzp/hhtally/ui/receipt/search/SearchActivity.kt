@@ -2,14 +2,13 @@ package com.zzp.hhtally.ui.receipt.search
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
+import android.os.Build
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import com.github.gzuliyujiang.wheelpicker.OptionPicker
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.zzp.hhtally.R
 import com.zzp.hhtally.base.BaseActivity
 import com.zzp.hhtally.data.*
 import com.zzp.hhtally.databinding.ActivitySearchBinding
@@ -17,7 +16,6 @@ import com.zzp.hhtally.ui.receipt.adapter.BillAdapter
 import com.zzp.hhtally.util.LabelUtil
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class SearchActivity : BaseActivity<ISearchView, SearchPresenter>(),
@@ -29,10 +27,15 @@ class SearchActivity : BaseActivity<ISearchView, SearchPresenter>(),
 
     private lateinit var billAdapter: BillAdapter
 
-    private val labelBillList = ArrayList<Bill>()
-    private val timeBillList = ArrayList<Bill>()
+//    private val labelBillList = ArrayList<Bill>()
+//    private val timeBillList = ArrayList<Bill>()
 
-    private lateinit var removeReceiptActivityLauncher: ActivityResultLauncher<Intent>
+    private var pageNum = 1
+    private var startTime = ""
+    private var endTime = ""
+    private var label = ""
+
+    private lateinit var receiptInfoActivityLauncher: ActivityResultLauncher<Intent>
 
     override fun createPresenter() = SearchPresenter(this)
 
@@ -41,16 +44,25 @@ class SearchActivity : BaseActivity<ISearchView, SearchPresenter>(),
         setContentView(binding.root)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun initData() {
         initDatePicker()
         initLabelPicker(LabelUtil.labelList)
-        removeReceiptActivityLauncher =
+        receiptInfoActivityLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                 if (activityResult.resultCode == Activity.RESULT_OK) {
-                    presenter.getBillsByDate(binding.tvTime.text.toString())
+                    val id = activityResult.data?.getIntExtra("billId", -1)
+                    if (id != -1) {
+                        val list = arrayListOf<Bill>()
+                        list.addAll(billAdapter.currentList)
+                        list.removeIf {
+                            it.billId == id
+                        }
+                        billAdapter.submitList(list)
+                    }
                 }
             }
-        billAdapter = BillAdapter(this, removeReceiptActivityLauncher)
+        billAdapter = BillAdapter(this, receiptInfoActivityLauncher)
     }
 
     override fun initView() {
@@ -65,6 +77,26 @@ class SearchActivity : BaseActivity<ISearchView, SearchPresenter>(),
             labelPicker?.show()
         }
         binding.rvBill.adapter = billAdapter
+        binding.layoutRefresh.setEnableLoadMoreWhenContentNotFull(false)
+        binding.layoutRefresh.setOnRefreshListener {
+            pageNum = 1
+            presenter.getBillsByCondition(
+                pageNum,
+                startTime,
+                endTime,
+                if (label.isNotEmpty()) LabelUtil.getLabelIdFromName(label) else null
+            )
+        }
+
+        binding.layoutRefresh.setOnLoadMoreListener {
+            pageNum++
+            presenter.getBillsByCondition(
+                pageNum,
+                startTime,
+                endTime,
+                if (label.isNotEmpty()) LabelUtil.getLabelIdFromName(label) else null
+            )
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -85,12 +117,18 @@ class SearchActivity : BaseActivity<ISearchView, SearchPresenter>(),
         datePicker?.addOnPositiveButtonClickListener {
             val time = SimpleDateFormat("yyy-MM-dd", Locale.CHINA).format(it)
             binding.tvTime.text = time
-            presenter.getBillsByDate(time)
+            startTime = time
+            pageNum = 1
+            presenter.getBillsByCondition(
+                pageNum,
+                startTime,
+                endTime,
+                if (label.isNotEmpty()) LabelUtil.getLabelIdFromName(label) else null
+            )
         }
     }
 
     private fun initLabelPicker(labels: List<Label>) {
-
         labelPicker = OptionPicker(this)
         labelPicker?.setTitle("标签")
         labelPicker?.setBodyWidth(140)
@@ -99,31 +137,44 @@ class SearchActivity : BaseActivity<ISearchView, SearchPresenter>(),
         })
         labelPicker?.setOnOptionPickedListener { _, item ->
             binding.tvLabel.text = item.toString()
-            presenter.getBillsByLabel(LabelUtil.getLabelIdFromName(item.toString()))
+            label = item.toString()
+            pageNum = 1
+            presenter.getBillsByCondition(
+                pageNum,
+                startTime,
+                endTime,
+                if (label.isNotEmpty()) LabelUtil.getLabelIdFromName(label) else null
+            )
         }
     }
 
-    override fun doSearchSuccess(billList: List<Bill>, type: Int) {
-        if (type == TYPE_LABEL_SEARCH) {
-            labelBillList.clear()
-            labelBillList.addAll(billList)
-        } else if (type == TYPE_TIME_SEARCH) {
-            timeBillList.clear()
-            timeBillList.addAll(billList)
+    override fun doSearchSuccess(billList: List<Bill>, isFirst: Boolean) {
+        if (isFirst) {
+            billAdapter.submitList(billList)
+        } else {
+            val list = arrayListOf<Bill>()
+            list.addAll(billAdapter.currentList)
+            list.addAll(billList)
+            billAdapter.submitList(list)
         }
-        billAdapter.submitList(mergeList())
+        if (binding.layoutRefresh.isRefreshing) {
+            binding.layoutRefresh.finishRefresh()
+        }
+        if (binding.layoutRefresh.isLoading) {
+            binding.layoutRefresh.finishLoadMore()
+        }
     }
 
-    private fun mergeList(): List<Bill> {
-        if (labelBillList.isEmpty()) return timeBillList.toList()
-        if (timeBillList.isEmpty()) return labelBillList.toList()
-        val list = arrayListOf<Bill>()
-        for(bill in timeBillList) {
-            if (labelBillList.contains(bill)) {
-                list.add(bill)
-            }
-        }
-        return list.toList()
-    }
+//    private fun mergeList(): List<Bill> {
+//        if (labelBillList.isEmpty()) return timeBillList.toList()
+//        if (timeBillList.isEmpty()) return labelBillList.toList()
+//        val list = arrayListOf<Bill>()
+//        for(bill in timeBillList) {
+//            if (labelBillList.contains(bill)) {
+//                list.add(bill)
+//            }
+//        }
+//        return list.toList()
+//    }
 
 }

@@ -12,37 +12,53 @@ import com.zzp.hhtally.network.RetrofitManager
 import com.zzp.hhtally.util.execute
 import com.zzp.hhtally.util.showToast
 
-class SearchPresenter (baseView: ISearchView) : BasePresenter<ISearchView>(baseView) {
+class SearchPresenter(baseView: ISearchView) : BasePresenter<ISearchView>(baseView) {
 
 
-    fun getBillsByLabel(labelId: Int) {
+//    fun getBillsByLabel(labelId: Int) {
+//        val view = getView() ?: return
+//        val activity = view as RxAppCompatActivity
+//        RetrofitManager.apiService.getBillsByLabel(labelId).execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
+//            override fun onSuccess(model: HttpResult<List<Bill>>) {
+//                if (model.code == 200) {
+//                    if (model.data.isNotEmpty()) view.doSearchSuccess(model.data.reversed(), TYPE_LABEL_SEARCH)
+//                } else {
+//                    model.msg.showToast()
+//                }
+//            }
+//
+//        })
+//    }
+//
+//    fun getBillsByDate(date: String) {
+//        val view = getView() ?: return
+//        val activity = view as RxAppCompatActivity
+//        RetrofitManager.apiService.getBillsByDate(date).execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
+//            override fun onSuccess(model: HttpResult<List<Bill>>) {
+//                if (model.code == 200) {
+//                    if (model.data.isNotEmpty()) view.doSearchSuccess(model.data.reversed(), TYPE_TIME_SEARCH)
+//                } else {
+//                    model.msg.showToast()
+//                }
+//            }
+//
+//        })
+//    }
+
+    fun getBillsByCondition(pageNum: Int, startTime: String, endTime: String, labelId: Int?) {
         val view = getView() ?: return
         val activity = view as RxAppCompatActivity
-        RetrofitManager.apiService.getBillsByLabel(labelId).execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
-            override fun onSuccess(model: HttpResult<List<Bill>>) {
-                if (model.code == 200) {
-                    if (model.data.isNotEmpty()) view.doSearchSuccess(model.data.reversed(), TYPE_LABEL_SEARCH)
-                } else {
-                    model.msg.showToast()
+        RetrofitManager.apiService.getBillsByCondition(pageNum, startTime, endTime, labelId)
+            .execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
+                override fun onSuccess(model: HttpResult<List<Bill>>) {
+                    if (model.code == 200) {
+                        view.doSearchSuccess(model.data, pageNum == 1)
+                    } else {
+                        model.msg.showToast()
+                    }
                 }
-            }
 
-        })
-    }
-
-    fun getBillsByDate(date: String) {
-        val view = getView() ?: return
-        val activity = view as RxAppCompatActivity
-        RetrofitManager.apiService.getBillsByDate(date).execute(activity.bindToLifecycle(), object : HttpCallback<HttpResult<List<Bill>>>() {
-            override fun onSuccess(model: HttpResult<List<Bill>>) {
-                if (model.code == 200) {
-                    if (model.data.isNotEmpty()) view.doSearchSuccess(model.data.reversed(), TYPE_TIME_SEARCH)
-                } else {
-                    model.msg.showToast()
-                }
-            }
-
-        })
+            })
     }
 
 }

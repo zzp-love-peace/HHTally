@@ -40,17 +40,34 @@ interface NetworkService {
     @GET("/bill/getAll")
     fun getAllBills(): Observable<HttpResult<List<Bill>>>
 
+    @GET("/bill/getAll")
+    fun getAllBills(
+        @Query("pageNum") pageNum: Int,
+        @Query("type") type: Int
+    ): Observable<HttpResult<List<Bill>>>
+
     @GET("/bill/getByLabel")
     fun getBillsByLabel(@Query("labelId") labelId: Int): Observable<HttpResult<List<Bill>>>
 
     @GET("/bill/getByDate")
     fun getBillsByDate(@Query("date") date: String): Observable<HttpResult<List<Bill>>>
 
+    @GET("/bill/getByCondition")
+    fun getBillsByCondition(
+        @Query("pageNum") pageNum: Int,
+        @Query("startTime") startTime: String,
+        @Query("endTime") endTime: String,
+        @Query("labelId") labelId: Int?
+    ): Observable<HttpResult<List<Bill>>>
+
     @PUT("/bill/add")
     fun addBill(@Body bill: Bill): Observable<HttpResult<Any?>>
 
     @DELETE("/bill/remove")
     fun removeBill(@Query("billId") billId: Int): Observable<HttpResult<Any?>>
+
+    @PUT("/bill/update")
+    fun updateBill(@Body bill: Bill): Observable<HttpResult<Any?>>
 
     @GET("chart/getYearInfor")
     fun getYearInfo(@Query("year") year: String): Observable<HttpResult<YearInfo>>
